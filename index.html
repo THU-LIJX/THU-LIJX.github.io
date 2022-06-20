@@ -216,14 +216,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>0</span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
+              <span>3 mins.</span>
             </span>
 
         </div>
@@ -235,7 +235,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h3 id="有限马尔可夫决策过程（Markov-Decision-Process-MDP）"><a href="#有限马尔可夫决策过程（Markov-Decision-Process-MDP）" class="headerlink" title="有限马尔可夫决策过程（Markov Decision Process, MDP）"></a>有限马尔可夫决策过程（Markov Decision Process, MDP）</h3><p>一个MDP可以用一个四元组表示$M = &lt; S, A, P, R&gt;$，其中</p>
+<ul>
+<li><em>S</em>: 一个有限的状态集合，$S = {s_1, s_2, \cdots, s_n}$</li>
+<li><em>A</em>: 一个有限的动作集合，$A = {a_1, a_2, \cdots, a_m}$</li>
+<li><em>P</em>: 状态转移概率，$P<em>{ss’}^a = Pr\left[S</em>{t+1} = s’ | S_t = s, A_t = a\right]$</li>
+<li><em>R</em>: Reward函数，$R<em>s^a = E\left[R</em>{t+1} | S_t = s, A_t = a\right]$</li>
+</ul>
+<p>定义Return为</p>
+<script type="math/tex; mode=display">
+    G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2R_{t+3} + \cdots = \sum_{k=0}^\infty \gamma^k R_{t+k+1}</script><p>性质：$G<em>t = R</em>{t+1} + \gamma G_{t+1}$，其中$0 \leq \gamma \leq 1$, 当$\gamma=1$时，需要确保每条序列都终止。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/20/Reinforcement-Learning/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -361,12 +378,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">0k</span>
+    <span title="Symbols count total">3k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1 mins.</span>
+    <span title="Reading time total">3 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
@@ -423,6 +440,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
