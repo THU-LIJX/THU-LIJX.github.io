@@ -91,4 +91,37 @@
 <script type="math/tex; mode=display">
    \pi_{*}(s) = \text{argmax}_a q_*(s, a)</script>]]></content>
   </entry>
+  <entry>
+    <title>Variational Inference</title>
+    <url>/2022/07/10/Variational-Inference/</url>
+    <content><![CDATA[<p>假设随机变量$X$和$Z$服从联合分布$p(x, z; \theta)$，其中$\theta$是分布的参数。我们可以得到$X$的观测值，但不能得到$Z$的观测值，即$X$为观测变量，$Z$为隐变量。给定$\theta$，并且有观测值$x$，我们希望得到$Z$的后验分布$p(z; x, \theta)$。通常这个后验分布无法直接计算，但可以通过一个变分分布$q(z)$近似。’<br><span id="more"></span></p>
+<h3 id="Kullback-Leibler-divergence-KL散度"><a href="#Kullback-Leibler-divergence-KL散度" class="headerlink" title="Kullback-Leibler divergence (KL散度)"></a>Kullback-Leibler divergence (KL散度)</h3><p>对于离散分布$P$和$Q$，KL散度定义为</p>
+<script type="math/tex; mode=display">
+D_{KL}\left(P \ ||\ Q\right) = \sum_{x \in \mathcal{X}} P(x)\log\left(\frac{P(x)}{Q(x)}\right)</script><p>对于连续分布$P$和$Q$，KL散度定义为</p>
+<script type="math/tex; mode=display">
+D_{KL}\left(P \ ||\ Q\right) = \int_{-\infty}^{+\infty} P(x)\log\left(\frac{P(x)}{Q(x)}\right) dx</script><h3 id="Evidence-Lower-Bound-ELBO"><a href="#Evidence-Lower-Bound-ELBO" class="headerlink" title="Evidence Lower Bound (ELBO)"></a>Evidence Lower Bound (ELBO)</h3><p>evidence定义为$\log p(x; \theta)$。假设随机变量$Z$服从分布$q$，则可以推出evidence的一个下界。</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\log p(x; \theta) &= \log \int p(x, z; \theta) dz \\
+&= \log \int q(z) \frac{p(x, z; \theta)}{q(z)} dz \\
+&= \log \mathbb{E}_{Z\sim q}\left[\frac{p(x, Z)}{q(Z)}\right] \\
+&\geq \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z)}{q(Z)} \right] \tag{Jensen's Inequality} \\
+\end{align*}</script><p><strong>Jenson’ s Inequality: </strong>$\mathbb{E}[\varphi(X)] \geq \varphi(\mathbb{E}[X])$，其中$\varphi$是一个凸函数。</p>
+<p>将$\mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z)}{q(Z)}\right]$ 定义为<strong>ELBO</strong>，显然，ELBO和evidence之间存在一个gap，而这个gap变分分布$q(z)$和真实分布$p(z;x, \theta)$的KL散度，推导如下。</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+KL(q(z) \ || \ p(z|x, \theta)) &:= \mathbb{E}_{Z\sim q}\left[\log \frac{q(Z)}{p(Z; x, \theta)} \right] \\
+&= \mathbb{E}_{Z\sim q}\left[\log q(Z) \right] - \mathbb{E}_{Z\sim q}\left[\log\frac{p(x, Z; \theta)}{p(x; \theta)} \right] \\
+&= \mathbb{E}_{Z\sim q}\left[\log q(Z) \right] - \mathbb{E}_{Z\sim q}\left[\log p(x, Z; \theta) \right] + \mathbb{E}_{Z\sim q}\left[\log p(x; \theta) \right] \\
+&= \log p(x; \theta) - \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z; \theta)}{q(Z)} \right] \\
+&= evidence - ELBO
+\end{align*}</script><h4 id="Variational-Inference"><a href="#Variational-Inference" class="headerlink" title="Variational Inference"></a>Variational Inference</h4><p>在得到观测数据$x$之后，我们希望做极大似然估计求$\theta$，但由于边缘分布$p(x; \theta) = \frac{p(x,z; \theta)}{p(z;x, \theta)}$无法直接计算，所以希望使用一个变分分布$q(z)$去近似$p(z; x, \theta)$，从而能够计算$p(x; \theta)$。为了使$q(z)$较好地近似$p(z; x, \theta)$，可以通过减小它们之间的KL散度实现，也即最大化ELBO。</p>
+<h4 id="Expectation-Maximization-EM算法"><a href="#Expectation-Maximization-EM算法" class="headerlink" title="Expectation-Maximization (EM算法)"></a>Expectation-Maximization (EM算法)</h4><ul>
+<li><strong>Expectation Step: </strong>$q^* = \arg\max<em>{q} ELBO =  \arg\max</em>{q} \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z; \theta)}{q(Z)} \right]$</li>
+<li><strong>Maximization Step: </strong>$\theta<em>{new} = \arg \max</em>{\theta} ELBO = \arg\max<em>{\theta}\mathbb{E}</em>{Z\sim {q^\star}}\left[\log \frac{p(x, Z; \theta)}{q^\star(Z)} \right]$</li>
+<li>重复这个过程直到收敛</li>
+</ul>
+<p>E步相当于在给定$\theta$的情况下，找到一个最优的$q(z)$，去逼近$p(z;x, \theta)$，使得通过变分得到估计尽量准确；M步相当于，在得到了一个较为准确的估计的条件下，做极大似然估计。</p>
+]]></content>
+  </entry>
 </search>

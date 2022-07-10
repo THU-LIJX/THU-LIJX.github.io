@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"thu-lijx.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="有限马尔可夫决策过程（Markov Decision Process, MDP）一个MDP可以用一个四元组表示$M &#x3D; &lt; S, A, P, R&gt;$，其中  S: 一个有限的状态集合，$S &#x3D; {s_1, s_2, \cdots, s_n}$ A: 一个有限的动作集合，$A &#x3D; {a_1, a_2, \cdots, a_m}$ P: 状态转移概率，$P{ss’}^a &#x3D; Pr\left">
+  <meta name="description" content="假设随机变量$X$和$Z$服从联合分布$p(x, z; \theta)$，其中$\theta$是分布的参数。我们可以得到$X$的观测值，但不能得到$Z$的观测值，即$X$为观测变量，$Z$为隐变量。给定$\theta$，并且有观测值$x$，我们希望得到$Z$的后验分布$p(z; x, \theta)$。通常这个后验分布无法直接计算，但可以通过一个变分分布$q(z)$近似。’">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Reinforcement Learning">
-<meta property="og:url" content="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/index.html">
+<meta property="og:title" content="Variational Inference">
+<meta property="og:url" content="https://thu-lijx.github.io/2022/07/10/Variational-Inference/index.html">
 <meta property="og:site_name" content="Shin&#39;s notebook">
-<meta property="og:description" content="有限马尔可夫决策过程（Markov Decision Process, MDP）一个MDP可以用一个四元组表示$M &#x3D; &lt; S, A, P, R&gt;$，其中  S: 一个有限的状态集合，$S &#x3D; {s_1, s_2, \cdots, s_n}$ A: 一个有限的动作集合，$A &#x3D; {a_1, a_2, \cdots, a_m}$ P: 状态转移概率，$P{ss’}^a &#x3D; Pr\left">
+<meta property="og:description" content="假设随机变量$X$和$Z$服从联合分布$p(x, z; \theta)$，其中$\theta$是分布的参数。我们可以得到$X$的观测值，但不能得到$Z$的观测值，即$X$为观测变量，$Z$为隐变量。给定$\theta$，并且有观测值$x$，我们希望得到$Z$的后验分布$p(z; x, \theta)$。通常这个后验分布无法直接计算，但可以通过一个变分分布$q(z)$近似。’">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-20T09:29:09.000Z">
-<meta property="article:modified_time" content="2022-06-20T09:29:09.000Z">
+<meta property="article:published_time" content="2022-07-10T03:22:22.000Z">
+<meta property="article:modified_time" content="2022-07-10T03:22:22.000Z">
 <meta property="article:author" content="Shin">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/">
+<link rel="canonical" href="https://thu-lijx.github.io/2022/07/10/Variational-Inference/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Reinforcement Learning | Shin's notebook</title>
+  <title>Variational Inference | Shin's notebook</title>
   
 
 
@@ -188,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/">
+    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/07/10/Variational-Inference/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -201,7 +201,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Reinforcement Learning
+          Variational Inference
         </h1>
 
         <div class="post-meta">
@@ -211,7 +211,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2022-06-20 17:29:09" itemprop="dateCreated datePublished" datetime="2022-06-20T17:29:09+08:00">2022-06-20</time>
+              <time title="Created: 2022-07-10 11:22:22" itemprop="dateCreated datePublished" datetime="2022-07-10T11:22:22+08:00">2022-07-10</time>
             </span>
 
           <br>
@@ -220,14 +220,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.9k</span>
+              <span>2.1k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>3 mins.</span>
+              <span>2 mins.</span>
             </span>
 
         </div>
@@ -239,93 +239,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="有限马尔可夫决策过程（Markov-Decision-Process-MDP）"><a href="#有限马尔可夫决策过程（Markov-Decision-Process-MDP）" class="headerlink" title="有限马尔可夫决策过程（Markov Decision Process, MDP）"></a>有限马尔可夫决策过程（Markov Decision Process, MDP）</h3><p>一个MDP可以用一个四元组表示$M = &lt; S, A, P, R&gt;$，其中</p>
-<ul>
-<li><em>S</em>: 一个有限的状态集合，$S = {s_1, s_2, \cdots, s_n}$</li>
-<li><em>A</em>: 一个有限的动作集合，$A = {a_1, a_2, \cdots, a_m}$</li>
-<li><em>P</em>: 状态转移概率，$P<em>{ss’}^a = Pr\left[S</em>{t+1} = s’ | S_t = s, A_t = a\right]$</li>
-<li><em>R</em>: Reward函数，$R<em>s^a = E\left[R</em>{t+1} | S_t = s, A_t = a\right]$</li>
+        <p>假设随机变量$X$和$Z$服从联合分布$p(x, z; \theta)$，其中$\theta$是分布的参数。我们可以得到$X$的观测值，但不能得到$Z$的观测值，即$X$为观测变量，$Z$为隐变量。给定$\theta$，并且有观测值$x$，我们希望得到$Z$的后验分布$p(z; x, \theta)$。通常这个后验分布无法直接计算，但可以通过一个变分分布$q(z)$近似。’<br><span id="more"></span></p>
+<h3 id="Kullback-Leibler-divergence-KL散度"><a href="#Kullback-Leibler-divergence-KL散度" class="headerlink" title="Kullback-Leibler divergence (KL散度)"></a>Kullback-Leibler divergence (KL散度)</h3><p>对于离散分布$P$和$Q$，KL散度定义为</p>
+<script type="math/tex; mode=display">
+D_{KL}\left(P \ ||\ Q\right) = \sum_{x \in \mathcal{X}} P(x)\log\left(\frac{P(x)}{Q(x)}\right)</script><p>对于连续分布$P$和$Q$，KL散度定义为</p>
+<script type="math/tex; mode=display">
+D_{KL}\left(P \ ||\ Q\right) = \int_{-\infty}^{+\infty} P(x)\log\left(\frac{P(x)}{Q(x)}\right) dx</script><h3 id="Evidence-Lower-Bound-ELBO"><a href="#Evidence-Lower-Bound-ELBO" class="headerlink" title="Evidence Lower Bound (ELBO)"></a>Evidence Lower Bound (ELBO)</h3><p>evidence定义为$\log p(x; \theta)$。假设随机变量$Z$服从分布$q$，则可以推出evidence的一个下界。</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\log p(x; \theta) &= \log \int p(x, z; \theta) dz \\
+&= \log \int q(z) \frac{p(x, z; \theta)}{q(z)} dz \\
+&= \log \mathbb{E}_{Z\sim q}\left[\frac{p(x, Z)}{q(Z)}\right] \\
+&\geq \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z)}{q(Z)} \right] \tag{Jensen's Inequality} \\
+\end{align*}</script><p><strong>Jenson’ s Inequality: </strong>$\mathbb{E}[\varphi(X)] \geq \varphi(\mathbb{E}[X])$，其中$\varphi$是一个凸函数。</p>
+<p>将$\mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z)}{q(Z)}\right]$ 定义为<strong>ELBO</strong>，显然，ELBO和evidence之间存在一个gap，而这个gap变分分布$q(z)$和真实分布$p(z;x, \theta)$的KL散度，推导如下。</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+KL(q(z) \ || \ p(z|x, \theta)) &:= \mathbb{E}_{Z\sim q}\left[\log \frac{q(Z)}{p(Z; x, \theta)} \right] \\
+&= \mathbb{E}_{Z\sim q}\left[\log q(Z) \right] - \mathbb{E}_{Z\sim q}\left[\log\frac{p(x, Z; \theta)}{p(x; \theta)} \right] \\
+&= \mathbb{E}_{Z\sim q}\left[\log q(Z) \right] - \mathbb{E}_{Z\sim q}\left[\log p(x, Z; \theta) \right] + \mathbb{E}_{Z\sim q}\left[\log p(x; \theta) \right] \\
+&= \log p(x; \theta) - \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z; \theta)}{q(Z)} \right] \\
+&= evidence - ELBO
+\end{align*}</script><h4 id="Variational-Inference"><a href="#Variational-Inference" class="headerlink" title="Variational Inference"></a>Variational Inference</h4><p>在得到观测数据$x$之后，我们希望做极大似然估计求$\theta$，但由于边缘分布$p(x; \theta) = \frac{p(x,z; \theta)}{p(z;x, \theta)}$无法直接计算，所以希望使用一个变分分布$q(z)$去近似$p(z; x, \theta)$，从而能够计算$p(x; \theta)$。为了使$q(z)$较好地近似$p(z; x, \theta)$，可以通过减小它们之间的KL散度实现，也即最大化ELBO。</p>
+<h4 id="Expectation-Maximization-EM算法"><a href="#Expectation-Maximization-EM算法" class="headerlink" title="Expectation-Maximization (EM算法)"></a>Expectation-Maximization (EM算法)</h4><ul>
+<li><strong>Expectation Step: </strong>$q^* = \arg\max<em>{q} ELBO =  \arg\max</em>{q} \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z; \theta)}{q(Z)} \right]$</li>
+<li><strong>Maximization Step: </strong>$\theta<em>{new} = \arg \max</em>{\theta} ELBO = \arg\max<em>{\theta}\mathbb{E}</em>{Z\sim {q^\star}}\left[\log \frac{p(x, Z; \theta)}{q^\star(Z)} \right]$</li>
+<li>重复这个过程直到收敛</li>
 </ul>
-<p>定义Return为</p>
-<script type="math/tex; mode=display">
-    G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2R_{t+3} + \cdots = \sum_{k=0}^\infty \gamma^k R_{t+k+1}</script><p>性质：$G<em>t = R</em>{t+1} + \gamma G_{t+1}$，其中$0 \leq \gamma \leq 1$, 当$\gamma=1$时，需要确保每条序列都终止。<br><span id="more"></span></p>
-<h4 id="Value-Function"><a href="#Value-Function" class="headerlink" title="Value Function"></a>Value Function</h4><p>令策略为$\pi$。</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-    &v_{\pi}(s) = \mathbb{E_\pi}\left[G_t|S_t = s\right] \\
-    &q_{\pi}(s, a) = \mathbb{E_\pi}\left[G_t \ | \ S_t=s, A_t = a \right]
-\end{align*}</script><h4 id="Bellman-Equation"><a href="#Bellman-Equation" class="headerlink" title="Bellman Equation"></a>Bellman Equation</h4><script type="math/tex; mode=display">
-\begin{align*}
-    &v_{\pi}(s) = \sum_{a\in A} \pi(a|s) (R_s^a + \gamma\sum_{s'\in S}P_{ss'}^av_\pi(s')) \\
-    &q_{\pi}(s,a) = R_s^a + \gamma\sum_{s'\in S} P_{ss'}^a \sum_{a' \in A} \pi(a'|s')q_\pi(s', a')
-\end{align*}</script><p>写成期望形式</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-    &v_\pi(s) = \mathbb{E_\pi}[R_{t+1} + \gamma v_\pi(S_{t+1})| S_t = s] \\
-    &q_{\pi}(s, a) = \mathbb{E}[R_{t+1} + \gamma q_\pi(S_{t+1}, A_{t+1})|S_t = s, A_t = a]
-\end{align*}</script><p>写成矩阵形式</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}
-    v(s_1) \\
-    \vdots \\
-    v(s_n)
-\end{bmatrix} = 
-\begin{bmatrix}
-    \mathcal{R}_{s_1} \\
-    \vdots \\
-    \mathcal{R}_{s_n}
-\end{bmatrix} + \gamma
-\begin{bmatrix}
-    P_{s_1s_1} & \cdots & P_{s_1s_n} \\
-    \vdots & & \vdots \\
-    P_{s_ns_1} & \cdots & P_{s_ns_n} \\
-\end{bmatrix}
-\begin{bmatrix}
-    v(s_1) \\
-    \vdots \\
-    v(s_n) 
-\end{bmatrix}</script><p>其中$\mathcal{R}<em>s = \mathbb{E}[R</em>{t+1} | S<em>t = s]$, $P</em>{ss’} = Pr[S_{t+1}=s’ | S_t = s]$。求解复杂度为$O(n^3)$，通常不会使用。</p>
-<h4 id="Optimal-Policies-and-Optimal-Value-Function"><a href="#Optimal-Policies-and-Optimal-Value-Function" class="headerlink" title="Optimal Policies and Optimal Value Function"></a>Optimal Policies and Optimal Value Function</h4><p>$\pi \geq \pi’$当且仅当对于任意s，都满足$v<em>\pi(s) &gt; v</em>{\pi’}(s)$</p>
-<p>记最优策略为$\pi_{*}$，则有</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-    &v_{\pi_*}(s) = \max_{\pi} v_{\pi}(s) \\
-    &q_{\pi_*}(s, a) = \max_{\pi} q_{\pi}(s, a)
-\end{align*}</script><h4 id="Bellman-Optimal-Equation"><a href="#Bellman-Optimal-Equation" class="headerlink" title="Bellman Optimal Equation"></a>Bellman Optimal Equation</h4><script type="math/tex; mode=display">
-\begin{align*}
-    &v_*(s) = \max_{a} q_{\pi_*}(s, a) \\
-    &q_*(s, a) = R_s^a + \gamma\sum_{s' \in S} P_{ss'}^a v_*(s')
-\end{align*}</script><h3 id="使用动态规划方法求解MDP"><a href="#使用动态规划方法求解MDP" class="headerlink" title="使用动态规划方法求解MDP"></a>使用动态规划方法求解MDP</h3><h4 id="策略评估（Policy-Evaluation）"><a href="#策略评估（Policy-Evaluation）" class="headerlink" title="策略评估（Policy Evaluation）"></a>策略评估（Policy Evaluation）</h4><p>策略评估指的是给定一个策略$\pi$，求出其价值函数$v_\pi$的过程。根据Bellman Equation，可以使用如下更新公式</p>
-<script type="math/tex; mode=display">
-    v_{k+1}(s) = \sum_{a\in A} \pi(a|s) (R_s^a + \gamma\sum_{s'\in S}P_{ss'}^av_k(s'))</script><p>具体计算时，既可以采用两个数组分别记录$v<em>{k+1}, v_k$，也可以只用一个数组就地更新，两种方式都可以收敛到$v</em>\pi$, 但收敛速度会有所不同。</p>
-<h4 id="策略提升（Policy-Improvement）"><a href="#策略提升（Policy-Improvement）" class="headerlink" title="策略提升（Policy Improvement）"></a>策略提升（Policy Improvement）</h4><p>策略提升指的是根据给定策略$\pi$，得到一个新的策略$\pi’$，使得$\pi’ \geq \pi$。</p>
-<p>使用如下方式对策略进行更新</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-    \pi'(s) &:= \text{argmax}_{a} q_\pi(s, a) \\
-            &= \text{argmax}_{a} R_s^a + \gamma \sum_{s' \in S}P_{ss'}^av_\pi(s')
-\end{align*}</script><p>上述方法是有效的，证明如下，假设$\pi$和$\pi’$都是确定性策略，且对于任意$s\in S$，都有</p>
-<script type="math/tex; mode=display">
-    q_\pi(s, \pi'(s)) \geq v_\pi(s)</script><p>则</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-    v_\pi(s) &\leq q_\pi(s, \pi'(s)) \\
-             &\leq \mathbb{E}[R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t=t, A_t=\pi'(s)] \\
-             &\leq \mathbb{E_{\pi'}}[R_{t+1} + \gamma q_\pi(S_{t+1}, \pi'(S_{t+1})) | S_t=s] \\
-             &\leq \mathbb{E_{\pi'}}[R_{t+1} + \gamma\mathbb{E}[R_{t+2} + \gamma v_\pi(S_{t+2})| S_{t+1}, A_{t+1}=\pi'(S_{t+1})] | S_t=s] \\
-             &\leq \mathbb{E_{\pi'}}[R_{t+1} + \gamma R_{t+2} + \gamma^2 v_\pi(S_{t+2}) | S_t=s] \\
-             &\leq \mathbb{E_{\pi'}}[R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+2} + \gamma^3 R_{t+3} + \cdots | S_t=s, A_t=\pi'(s)] \\
-             &= v_{\pi'}(s)
-\end{align*}</script><h4 id="策略迭代（Policy-Iteration）"><a href="#策略迭代（Policy-Iteration）" class="headerlink" title="策略迭代（Policy Iteration）"></a>策略迭代（Policy Iteration）</h4><ol>
-<li>策略评估</li>
-<li>策略提升</li>
-<li>重复1、2直到收敛</li>
-</ol>
-<h4 id="价值迭代（Value-Iteration）"><a href="#价值迭代（Value-Iteration）" class="headerlink" title="价值迭代（Value Iteration）"></a>价值迭代（Value Iteration）</h4><p>使用Bellman Optimal Equation直接计算出$v_{*}(s)$, 迭代公式为</p>
-<script type="math/tex; mode=display">
-    v_{k+1}(s) := \max_a R_s^a + \gamma \sum_{s' \in S} P_{ss'}^av_k(s)</script><p>令$\pi_{*}(s)$为</p>
-<script type="math/tex; mode=display">
-   \pi_{*}(s) = \text{argmax}_a q_*(s, a)</script>
+<p>E步相当于在给定$\theta$的情况下，找到一个最优的$q(z)$，去逼近$p(z;x, \theta)$，使得通过变分得到估计尽量准确；M步相当于，在得到了一个较为准确的估计的条件下，做极大似然估计。</p>
+
     </div>
 
     
@@ -339,11 +281,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2022/07/10/Variational-Inference/" rel="next" title="Variational Inference">
-      Variational Inference <i class="fa fa-chevron-right"></i>
+    <a href="/2022/06/20/Reinforcement-Learning/" rel="prev" title="Reinforcement Learning">
+      <i class="fa fa-chevron-left"></i> Reinforcement Learning
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -402,7 +344,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%EF%BC%88Markov-Decision-Process-MDP%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">有限马尔可夫决策过程（Markov Decision Process, MDP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Value-Function"><span class="nav-number">1.1.</span> <span class="nav-text">Value Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bellman-Equation"><span class="nav-number">1.2.</span> <span class="nav-text">Bellman Equation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Optimal-Policies-and-Optimal-Value-Function"><span class="nav-number">1.3.</span> <span class="nav-text">Optimal Policies and Optimal Value Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bellman-Optimal-Equation"><span class="nav-number">1.4.</span> <span class="nav-text">Bellman Optimal Equation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95%E6%B1%82%E8%A7%A3MDP"><span class="nav-number">2.</span> <span class="nav-text">使用动态规划方法求解MDP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0%EF%BC%88Policy-Evaluation%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">策略评估（Policy Evaluation）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%8F%90%E5%8D%87%EF%BC%88Policy-Improvement%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">策略提升（Policy Improvement）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3%EF%BC%88Policy-Iteration%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">策略迭代（Policy Iteration）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%EF%BC%88Value-Iteration%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">价值迭代（Value Iteration）</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kullback-Leibler-divergence-KL%E6%95%A3%E5%BA%A6"><span class="nav-number">1.</span> <span class="nav-text">Kullback-Leibler divergence (KL散度)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Evidence-Lower-Bound-ELBO"><span class="nav-number">2.</span> <span class="nav-text">Evidence Lower Bound (ELBO)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Variational-Inference"><span class="nav-number">2.1.</span> <span class="nav-text">Variational Inference</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Expectation-Maximization-EM%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">Expectation-Maximization (EM算法)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
