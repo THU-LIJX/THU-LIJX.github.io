@@ -267,6 +267,7 @@ KL(q(z) \ || \ p(z|x, \theta)) &:= \mathbb{E}_{Z\sim q}\left[\log \frac{q(Z)}{p(
 <li>重复这个过程直到收敛</li>
 </ul>
 <p>E步相当于在给定$\theta$的情况下，找到一个最优的$q(z)$，去逼近$p(z;x, \theta)$，使得通过变分得到估计尽量准确；M步相当于，在得到了一个较为准确的估计的条件下，做极大似然估计。</p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://mbernste.github.io/posts/elbo/">ELBO</a></p>
 
     </div>
 
@@ -403,12 +404,12 @@ KL(q(z) \ || \ p(z|x, \theta)) &:= \mathbb{E}_{Z\sim q}\left[\log \frac{q(Z)}{p(
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">5k</span>
+    <span title="Symbols count total">9k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">5 mins.</span>
+    <span title="Reading time total">8 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

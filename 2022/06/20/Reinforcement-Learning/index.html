@@ -27,10 +27,17 @@
 <meta property="og:site_name" content="Shin&#39;s notebook">
 <meta property="og:description" content="有限马尔可夫决策过程（Markov Decision Process, MDP）一个MDP可以用一个四元组表示$M &#x3D; &lt; S, A, P, R&gt;$，其中  S: 一个有限的状态集合，$S &#x3D; {s_1, s_2, \cdots, s_n}$ A: 一个有限的动作集合，$A &#x3D; {a_1, a_2, \cdots, a_m}$ P: 状态转移概率，$P{ss’}^a &#x3D; Pr\left">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/TD(0).png">
+<meta property="og:image" content="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/sarsa.png">
+<meta property="og:image" content="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/q-learning.png">
+<meta property="og:image" content="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/Policy-Gradient.png">
+<meta property="og:image" content="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/Policy-Gradient-w-baseline.png">
+<meta property="og:image" content="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/Actor-Critic.png">
 <meta property="article:published_time" content="2022-06-20T09:29:09.000Z">
-<meta property="article:modified_time" content="2022-06-20T09:29:09.000Z">
+<meta property="article:modified_time" content="2022-07-17T13:42:21.000Z">
 <meta property="article:author" content="Shin">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/TD(0).png">
 
 <link rel="canonical" href="https://thu-lijx.github.io/2022/06/20/Reinforcement-Learning/">
 
@@ -213,6 +220,13 @@
 
               <time title="Created: 2022-06-20 17:29:09" itemprop="dateCreated datePublished" datetime="2022-06-20T17:29:09+08:00">2022-06-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-17 21:42:21" itemprop="dateModified" datetime="2022-07-17T21:42:21+08:00">2022-07-17</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="Symbols count in article">
@@ -220,14 +234,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.9k</span>
+              <span>7k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>3 mins.</span>
+              <span>6 mins.</span>
             </span>
 
         </div>
@@ -248,7 +262,7 @@
 </ul>
 <p>定义Return为</p>
 <script type="math/tex; mode=display">
-    G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2R_{t+3} + \cdots = \sum_{k=0}^\infty \gamma^k R_{t+k+1}</script><p>性质：$G<em>t = R</em>{t+1} + \gamma G_{t+1}$，其中$0 \leq \gamma \leq 1$, 当$\gamma=1$时，需要确保每条序列都终止。<br><span id="more"></span></p>
+G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2R_{t+3} + \cdots = \sum_{k=0}^\infty \gamma^k R_{t+k+1}</script><p>性质：$G<em>t = R</em>{t+1} + \gamma G_{t+1}$，其中$0 \leq \gamma \leq 1$, 当$\gamma=1$时，需要确保每条序列都终止。<br><span id="more"></span></p>
 <h4 id="Value-Function"><a href="#Value-Function" class="headerlink" title="Value Function"></a>Value Function</h4><p>令策略为$\pi$。</p>
 <script type="math/tex; mode=display">
 \begin{align*}
@@ -325,7 +339,66 @@
 <script type="math/tex; mode=display">
     v_{k+1}(s) := \max_a R_s^a + \gamma \sum_{s' \in S} P_{ss'}^av_k(s)</script><p>令$\pi_{*}(s)$为</p>
 <script type="math/tex; mode=display">
-   \pi_{*}(s) = \text{argmax}_a q_*(s, a)</script>
+   \pi_{*}(s) = \text{argmax}_a q_*(s, a)</script><h3 id="Temporal-Difference-Learning-时序差分学习"><a href="#Temporal-Difference-Learning-时序差分学习" class="headerlink" title="Temporal Difference Learning (时序差分学习)"></a>Temporal Difference Learning (时序差分学习)</h3><p>与蒙特卡洛方法一致，时序差分方法也可以直接从与环境互动的经验中学习策略，而不需要构建关于环境动态特性的模型。与动态规划相一致的是，时序差分方法也可以基于已得到的其他状态的估计值来更新当前状态的价值函数。在时序差分学习算法中，n-步算法将TD方法和MC方法联系在一起、TD（$\lambda$）能无缝地统一TD方法和MC方法。</p>
+<p>MC方法更新公式：</p>
+<script type="math/tex; mode=display">
+V(S_t) \gets V(S_t) + \alpha \left[G_t - V(S_t)\right]</script><p>TD方法更新公式：</p>
+<script type="math/tex; mode=display">
+V(S_t) \gets V(S_t) + \alpha \left[R_{t+1} + \gamma V(S_{t+1}) - V(S_t) \right]</script><p>其中$\delta<em>t = R</em>{t+1} + \gamma V(S_{t+1}) - V(S_t)$也称作TD error。</p>
+<h4 id="TD-0"><a href="#TD-0" class="headerlink" title="TD(0)"></a>TD(0)</h4><p>更新公式：$V(S<em>t) \gets V(S_t) + \alpha \left[R</em>{t+1} + \gamma V(S_{t+1}) - V(S_t) \right]$</p>
+<img src="/2022/06/20/Reinforcement-Learning/TD(0).png" class="">
+<h4 id="Sarsa"><a href="#Sarsa" class="headerlink" title="Sarsa"></a>Sarsa</h4><p>更新公式：$Q(S<em>t, A_t) \gets Q(S_t, A_t) + \alpha\left[R</em>{t+1} + \gamma Q(S<em>{t+1}, A</em>{t+1}) - Q(S_t, A_t)\right]$</p>
+<img src="/2022/06/20/Reinforcement-Learning/sarsa.png" class="">
+<h4 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h4><p>更新公式：$Q(S<em>t, A_t) \gets Q(S_t, A_t) + \alpha\left[R</em>{t+1} + \gamma \max<em>{a’}Q(S</em>{t+1}, a’) - Q(S_t, A_t)\right]$</p>
+<img src="/2022/06/20/Reinforcement-Learning/q-learning.png" class="">
+<h3 id="函数近似"><a href="#函数近似" class="headerlink" title="函数近似"></a>函数近似</h3><p>对价值函数进行参数化建模，用参数为$\theta$的函数$\hat{v}(s, \pmb{w})$去近似$v<em>\pi(s)$。指定一个状态的分布$\mu(s) \geq 0, \sum</em>{s} \mu(s) = 1$来表示我们对于每个状态s的误差的重视程度。一个自然的目标函数为均方价值误差，记为$VE$</p>
+<script type="math/tex; mode=display">
+VE(\pmb{w}) = \sum_{s\in S}\mu(s)\left[v_\pi(s) - \hat{v}(s, \pmb{w})\right]^2</script><p>假设在样本中的分布$\mu$和VE中的分布相同。在这种情况下，一个好的策略就是尽量减少观测到的样本的误差。使用SGD方法进行优化</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\pmb{w}_{t+1} &= \pmb{w}_t - \frac{1}{2}\alpha\nabla\left[v_\pi(S_t) - \hat{v}(S_t, \pmb{w}_t)\right]^2 \\
+&= \pmb{w}_t - \alpha\left[v_\pi(S_t) - \hat{v}(S_t, \pmb{w}_t)\right]\nabla\hat{v}(S_t, \pmb{w}_t)
+\end{align*}</script><p>由于我们无法得到$v<em>\pi(S_t)$，所以使用它的一个随机近似$U_t$替代，如果$U_t$是一个无偏估计，那么收敛性是有保证的。可以取$U_t$为$G_t$，这种方法被称做梯度方法。如果采用自举估计值，取$U_t$为$R</em>{t+1}+\hat{v}(S_{t+1}, \pmb{w})$，则没有足够的收敛性保证，但在大多数情况下，都会收敛，这种方法称为半梯度方法。</p>
+<h3 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h3><p>基于动作价值函数的方法，都是先学习动作价值函数，然后根据估计的动作价值函数选择动作，策略的获得依赖于价值函数。策略梯度方法对策略进行参数化建模，通过梯度上升的方式直接对策略进行学习。用$\pmb{\theta}$表示策略的参数向量。</p>
+<p>策略参数的学习方法都基于某种性能度量$J(\pmb{\theta})$的梯度，性能度量可以是从初始状态s到终止状态s’的return的期望。在能够分出episode和连续型的条件下，性能度量会有所不同。在得到梯度后，通过梯度上升，不断对策略的参数进行优化</p>
+<script type="math/tex; mode=display">
+\pmb{\theta_{t+1}} = \pmb{\theta_{t}} + \alpha \widehat{\nabla J(\pmb{\theta_{t}})}</script><p>其中，$\widehat{\nabla J(\pmb{\theta<em>{t}})}$是对$\nabla J(\pmb{\theta</em>{t}})$的随机估计。</p>
+<h4 id="策略梯度定理"><a href="#策略梯度定理" class="headerlink" title="策略梯度定理"></a>策略梯度定理</h4><p>在分幕式情况下策略梯度定理表达式如下</p>
+<script type="math/tex; mode=display">
+\nabla J(\pmb{\theta}) \propto \sum_s \mu(s) \sum_{a} q_\pi(s, a)\nabla \pi (a|s, \pmb{\theta})</script><p>其中，$\mu(s)$表示在使用策略$\pi$的条件下，s出现在轨迹中的概率。</p>
+<h4 id="REINFORCE"><a href="#REINFORCE" class="headerlink" title="REINFORCE"></a>REINFORCE</h4><p>由于$\mu(s)$是将目标策略$\pi$下每个状态出现的频率作为加权系数的求和项，如果按照策略$\pi$执行，则状态将按这个比例出现。假设$\gamma$为1即没有折扣，根据策略梯度定理</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\nabla J(\pmb{\theta}) &\propto \sum_s \mu(s) \sum_{a} q_\pi(s, a)\nabla \pi (a|s, \pmb{\theta}) \\
+&= \mathbb{E}_\pi\left[\sum_{a} q_\pi(S_t, a)\nabla \pi (a|S_t, \pmb{\theta})\right] \\
+&= \mathbb{E}_\pi\left[\sum_{a} \pi(a|S_t, \pmb{\theta})q_\pi(S_t, a)\frac{\nabla \pi (a|S_t, \pmb{\theta})}{\pi(a|S_t, \pmb{\theta})}\right] \\
+&= \mathbb{E}_\pi\left[q_\pi(S_t, A_t)\frac{\nabla \pi (A_t|S_t, \pmb{\theta})}{\pi(A_t|S_t, \pmb{\theta})}\right] \tag{用采样$A_t \sim \pi$替换$a$} \\
+&= \mathbb{E}_\pi\left[G_t\frac{\nabla \pi (A_t|S_t, \pmb{\theta})}{\pi(A_t|S_t, \pmb{\theta})}\right] \tag{$\mathbb{E}_\pi\left[G_t|S_t, A_t\right] = q_\pi(S_t, A_t)$} \\
+&= \mathbb{E}_\pi\left[G_t\nabla \ln \pi (A_t|S_t, \pmb{\theta})\right] \tag{$\nabla\ln x = \frac{\nabla x}{x}$}
+\end{align*}</script><p>则可以得到REINFORCE算法<br><img src="/2022/06/20/Reinforcement-Learning/Policy-Gradient.png" class=""></p>
+<h4 id="REINFORCE-with-baseline"><a href="#REINFORCE-with-baseline" class="headerlink" title="REINFORCE with baseline"></a>REINFORCE with baseline</h4><p>根据策略梯度定理</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\nabla J(\pmb{\theta}) &\propto \sum_s \mu(s) \sum_{a} q_\pi(s, a)\nabla \pi (a|s, \pmb{\theta}) \\
+&= \sum_s \mu(s) \sum_{a} (q_\pi(s, a)-b(s))\nabla \pi (a|s, \pmb{\theta})
+\end{align*}</script><p>由此导出更新公式</p>
+<script type="math/tex; mode=display">
+\pmb{\theta}_{t+1} = \pmb{\theta}_{t} + \alpha\left(G_t - b(S_t)\right)\frac{\nabla \pi (A_t|S_t, \pmb{\theta}_t)}{\pi(A_t|S_t, \pmb{\theta}_t)}</script><p>其中的$b(s)$可以是不随动作$a$变化的任意函数。因为这个baseline也可以是常量0，所以上式是REINFORCE算法更一般的推广。通常来说，加入baseline不会使更新的期望值发生变化，但是对方差会有很大影响。</p>
+<img src="/2022/06/20/Reinforcement-Learning/Policy-Gradient-w-baseline.png" class="">
+<h4 id="Actor-Critic"><a href="#Actor-Critic" class="headerlink" title="Actor-Critic"></a>Actor-Critic</h4><p>尽管带基线的强化学习方法既学习了一个策略函数也学习了一个状态价值函数，我们也不认为它是一种AC方法，因为它的状态价值函数仅被用作baseline，而不是作为一个Critic，也即没有被用于自举操作。只有当采用自举法时，才会出现依赖于函数逼近质量的偏差和渐进性收敛。引入自举，往往能减小方差和加速收敛。</p>
+<p>考虑单步AC方法，使用单步回报代替$G_t$，则得到如下更新公式</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\pmb{\theta}_{t+1} &= \pmb{\theta}_{t} + \alpha\left(G_{t:t+1} - \hat{v}_(S_t, \pmb{w})\right)\frac{\nabla \pi (A_t|S_t, \pmb{\theta}_t)}{\pi(A_t|S_t, \pmb{\theta}_t)} \\
+&= \pmb{\theta}_{t} + \alpha\left(R_{t+1} + \hat{v}(S_{t+1}, \pmb{w}) - \hat{v}_(S_t, \pmb{w})\right)\frac{\nabla \pi (A_t|S_t, \pmb{\theta}_t)}{\pi(A_t|S_t, \pmb{\theta}_t)} \\
+&= \pmb{\theta}_{t} + \alpha\delta_t\frac{\nabla \pi (A_t|S_t, \pmb{\theta}_t)}{\pi(A_t|S_t, \pmb{\theta}_t)}
+\end{align*}</script><p>进而可以得到如下算法</p>
+<img src="/2022/06/20/Reinforcement-Learning/Actor-Critic.png" class="">
+<h3 id="Deep-Reinforcement-Learning-DRL"><a href="#Deep-Reinforcement-Learning-DRL" class="headerlink" title="Deep Reinforcement Learning (DRL)"></a>Deep Reinforcement Learning (DRL)</h3><h4 id="Deep-Q-Learning-DQN"><a href="#Deep-Q-Learning-DQN" class="headerlink" title="Deep Q-Learning (DQN)"></a>Deep Q-Learning (DQN)</h4><h4 id="Deep-Deterministic-Policy-Gradient-DDPG"><a href="#Deep-Deterministic-Policy-Gradient-DDPG" class="headerlink" title="Deep Deterministic Policy Gradient (DDPG)"></a>Deep Deterministic Policy Gradient (DDPG)</h4><h4 id="Trust-Region-Policy-Gradient-TRPO"><a href="#Trust-Region-Policy-Gradient-TRPO" class="headerlink" title="Trust Region Policy Gradient (TRPO)"></a>Trust Region Policy Gradient (TRPO)</h4><h4 id="Proximal-Policy-Gradient-PPO"><a href="#Proximal-Policy-Gradient-PPO" class="headerlink" title="Proximal Policy Gradient (PPO)"></a>Proximal Policy Gradient (PPO)</h4><h4 id="Soft-Actor-Critic-SAC"><a href="#Soft-Actor-Critic-SAC" class="headerlink" title="Soft Actor-Critic (SAC)"></a>Soft Actor-Critic (SAC)</h4><p>参考文献：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf">《Reinforcement Learning: An Introduction》</a></li>
+</ol>
+
     </div>
 
     
@@ -402,7 +475,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%EF%BC%88Markov-Decision-Process-MDP%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">有限马尔可夫决策过程（Markov Decision Process, MDP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Value-Function"><span class="nav-number">1.1.</span> <span class="nav-text">Value Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bellman-Equation"><span class="nav-number">1.2.</span> <span class="nav-text">Bellman Equation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Optimal-Policies-and-Optimal-Value-Function"><span class="nav-number">1.3.</span> <span class="nav-text">Optimal Policies and Optimal Value Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bellman-Optimal-Equation"><span class="nav-number">1.4.</span> <span class="nav-text">Bellman Optimal Equation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95%E6%B1%82%E8%A7%A3MDP"><span class="nav-number">2.</span> <span class="nav-text">使用动态规划方法求解MDP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0%EF%BC%88Policy-Evaluation%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">策略评估（Policy Evaluation）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%8F%90%E5%8D%87%EF%BC%88Policy-Improvement%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">策略提升（Policy Improvement）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3%EF%BC%88Policy-Iteration%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">策略迭代（Policy Iteration）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%EF%BC%88Value-Iteration%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">价值迭代（Value Iteration）</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%EF%BC%88Markov-Decision-Process-MDP%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">有限马尔可夫决策过程（Markov Decision Process, MDP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Value-Function"><span class="nav-number">1.1.</span> <span class="nav-text">Value Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bellman-Equation"><span class="nav-number">1.2.</span> <span class="nav-text">Bellman Equation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Optimal-Policies-and-Optimal-Value-Function"><span class="nav-number">1.3.</span> <span class="nav-text">Optimal Policies and Optimal Value Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bellman-Optimal-Equation"><span class="nav-number">1.4.</span> <span class="nav-text">Bellman Optimal Equation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%96%B9%E6%B3%95%E6%B1%82%E8%A7%A3MDP"><span class="nav-number">2.</span> <span class="nav-text">使用动态规划方法求解MDP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0%EF%BC%88Policy-Evaluation%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">策略评估（Policy Evaluation）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%8F%90%E5%8D%87%EF%BC%88Policy-Improvement%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">策略提升（Policy Improvement）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%BF%AD%E4%BB%A3%EF%BC%88Policy-Iteration%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">策略迭代（Policy Iteration）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%B7%E5%80%BC%E8%BF%AD%E4%BB%A3%EF%BC%88Value-Iteration%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">价值迭代（Value Iteration）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Temporal-Difference-Learning-%E6%97%B6%E5%BA%8F%E5%B7%AE%E5%88%86%E5%AD%A6%E4%B9%A0"><span class="nav-number">3.</span> <span class="nav-text">Temporal Difference Learning (时序差分学习)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TD-0"><span class="nav-number">3.1.</span> <span class="nav-text">TD(0)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sarsa"><span class="nav-number">3.2.</span> <span class="nav-text">Sarsa</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Q-Learning"><span class="nav-number">3.3.</span> <span class="nav-text">Q-Learning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%BF%91%E4%BC%BC"><span class="nav-number">4.</span> <span class="nav-text">函数近似</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Policy-Gradient"><span class="nav-number">5.</span> <span class="nav-text">Policy Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6%E5%AE%9A%E7%90%86"><span class="nav-number">5.1.</span> <span class="nav-text">策略梯度定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REINFORCE"><span class="nav-number">5.2.</span> <span class="nav-text">REINFORCE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REINFORCE-with-baseline"><span class="nav-number">5.3.</span> <span class="nav-text">REINFORCE with baseline</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Actor-Critic"><span class="nav-number">5.4.</span> <span class="nav-text">Actor-Critic</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deep-Reinforcement-Learning-DRL"><span class="nav-number">6.</span> <span class="nav-text">Deep Reinforcement Learning (DRL)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Deep-Q-Learning-DQN"><span class="nav-number">6.1.</span> <span class="nav-text">Deep Q-Learning (DQN)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Deep-Deterministic-Policy-Gradient-DDPG"><span class="nav-number">6.2.</span> <span class="nav-text">Deep Deterministic Policy Gradient (DDPG)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Trust-Region-Policy-Gradient-TRPO"><span class="nav-number">6.3.</span> <span class="nav-text">Trust Region Policy Gradient (TRPO)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Proximal-Policy-Gradient-PPO"><span class="nav-number">6.4.</span> <span class="nav-text">Proximal Policy Gradient (PPO)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Soft-Actor-Critic-SAC"><span class="nav-number">6.5.</span> <span class="nav-text">Soft Actor-Critic (SAC)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -461,12 +534,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">5k</span>
+    <span title="Symbols count total">9k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">5 mins.</span>
+    <span title="Reading time total">8 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
