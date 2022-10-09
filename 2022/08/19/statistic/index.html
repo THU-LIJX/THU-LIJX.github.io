@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"thu-lijx.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="假设随机变量$X$和$Z$服从联合分布$p(x, z; \theta)$，其中$\theta$是分布的参数。我们可以得到$X$的观测值，但不能得到$Z$的观测值，即$X$为观测变量，$Z$为隐变量。给定$\theta$，并且有观测值$x$，我们希望得到$Z$的后验分布$p(z; x, \theta)$。通常这个后验分布无法直接计算，但可以通过一个变分分布$q(z)$近似。’">
+  <meta name="description" content="统计学知识梳理多元正态分布对于一元正态分布而言，有如下密度函数  \begin{align} f(x) &amp;&#x3D; \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\left[(x-\mu)&#x2F;\sigma\right]^2 &#x2F; 2} \\ &amp;&#x3D; (2\pi)^{-1&#x2F;2}(\sigma^2)^{-1&#x2F;2}e^{-(x-\mu)&#39;(\sigma^2)^{-1}(x-\mu) &#x2F; 2} \">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Variational Inference">
-<meta property="og:url" content="https://thu-lijx.github.io/2022/07/10/Variational-Inference/index.html">
+<meta property="og:title" content="statistic">
+<meta property="og:url" content="https://thu-lijx.github.io/2022/08/19/statistic/index.html">
 <meta property="og:site_name" content="Shin&#39;s notebook">
-<meta property="og:description" content="假设随机变量$X$和$Z$服从联合分布$p(x, z; \theta)$，其中$\theta$是分布的参数。我们可以得到$X$的观测值，但不能得到$Z$的观测值，即$X$为观测变量，$Z$为隐变量。给定$\theta$，并且有观测值$x$，我们希望得到$Z$的后验分布$p(z; x, \theta)$。通常这个后验分布无法直接计算，但可以通过一个变分分布$q(z)$近似。’">
+<meta property="og:description" content="统计学知识梳理多元正态分布对于一元正态分布而言，有如下密度函数  \begin{align} f(x) &amp;&#x3D; \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\left[(x-\mu)&#x2F;\sigma\right]^2 &#x2F; 2} \\ &amp;&#x3D; (2\pi)^{-1&#x2F;2}(\sigma^2)^{-1&#x2F;2}e^{-(x-\mu)&#39;(\sigma^2)^{-1}(x-\mu) &#x2F; 2} \">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-07-10T03:22:22.000Z">
-<meta property="article:modified_time" content="2022-07-10T03:22:22.000Z">
+<meta property="article:published_time" content="2022-08-19T08:57:27.000Z">
+<meta property="article:modified_time" content="2022-08-19T08:57:27.000Z">
 <meta property="article:author" content="Shin">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://thu-lijx.github.io/2022/07/10/Variational-Inference/">
+<link rel="canonical" href="https://thu-lijx.github.io/2022/08/19/statistic/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Variational Inference | Shin's notebook</title>
+  <title>statistic | Shin's notebook</title>
   
 
 
@@ -188,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/07/10/Variational-Inference/">
+    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/08/19/statistic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -201,7 +201,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Variational Inference
+          statistic
         </h1>
 
         <div class="post-meta">
@@ -211,7 +211,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2022-07-10 11:22:22" itemprop="dateCreated datePublished" datetime="2022-07-10T11:22:22+08:00">2022-07-10</time>
+              <time title="Created: 2022-08-19 16:57:27" itemprop="dateCreated datePublished" datetime="2022-08-19T16:57:27+08:00">2022-08-19</time>
             </span>
 
           <br>
@@ -220,14 +220,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.1k</span>
+              <span>3.5k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>2 mins.</span>
+              <span>3 mins.</span>
             </span>
 
         </div>
@@ -239,35 +239,46 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>假设随机变量$X$和$Z$服从联合分布$p(x, z; \theta)$，其中$\theta$是分布的参数。我们可以得到$X$的观测值，但不能得到$Z$的观测值，即$X$为观测变量，$Z$为隐变量。给定$\theta$，并且有观测值$x$，我们希望得到$Z$的后验分布$p(z; x, \theta)$。通常这个后验分布无法直接计算，但可以通过一个变分分布$q(z)$近似。’<br><span id="more"></span></p>
-<h3 id="Kullback-Leibler-divergence-KL散度"><a href="#Kullback-Leibler-divergence-KL散度" class="headerlink" title="Kullback-Leibler divergence (KL散度)"></a>Kullback-Leibler divergence (KL散度)</h3><p>对于离散分布$P$和$Q$，KL散度定义为</p>
+        <h2 id="统计学知识梳理"><a href="#统计学知识梳理" class="headerlink" title="统计学知识梳理"></a>统计学知识梳理</h2><h3 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h3><p>对于一元正态分布而言，有如下密度函数</p>
 <script type="math/tex; mode=display">
-D_{KL}\left(P \ ||\ Q\right) = \sum_{x \in \mathcal{X}} P(x)\log\left(\frac{P(x)}{Q(x)}\right)</script><p>对于连续分布$P$和$Q$，KL散度定义为</p>
+\begin{align}
+f(x) &= \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\left[(x-\mu)/\sigma\right]^2 / 2} \\
+&= (2\pi)^{-1/2}(\sigma^2)^{-1/2}e^{-(x-\mu)'(\sigma^2)^{-1}(x-\mu) / 2}
+\end{align}</script><p>其中的$(x-\mu)’(\sigma^2)^{-1}(x-\mu)$刻画了点$x$到均值$\mu$经过方差加权的距离，同理可以得到多元正态分布的密度函数（令维度为p）</p>
 <script type="math/tex; mode=display">
-D_{KL}\left(P \ ||\ Q\right) = \int_{-\infty}^{+\infty} P(x)\log\left(\frac{P(x)}{Q(x)}\right) dx</script><h3 id="Evidence-Lower-Bound-ELBO"><a href="#Evidence-Lower-Bound-ELBO" class="headerlink" title="Evidence Lower Bound (ELBO)"></a>Evidence Lower Bound (ELBO)</h3><p>evidence定义为$\log p(x; \theta)$。假设随机变量$Z$服从分布$q$，则可以推出evidence的一个下界。</p>
+f(\pmb{x}) = (2\pi)^{-p/2}|\pmb{\Sigma}|^{-1/2}e^{-(\pmb{x-\mu})'\pmb{\Sigma}^{-1}(\pmb{x-\mu})/2}</script><p>其中$\pmb{\mu}$为均值向量，$\pmb{\Sigma}$为协方差矩阵（对称正定）</p>
+<p>e.g. 二元正态分布的密度函数</p>
 <script type="math/tex; mode=display">
-\begin{align*}
-\log p(x; \theta) &= \log \int p(x, z; \theta) dz \\
-&= \log \int q(z) \frac{p(x, z; \theta)}{q(z)} dz \\
-&= \log \mathbb{E}_{Z\sim q}\left[\frac{p(x, Z)}{q(Z)}\right] \\
-&\geq \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z)}{q(Z)} \right] \tag{Jensen's Inequality} \\
-\end{align*}</script><p><strong>Jenson’ s Inequality: </strong>$\mathbb{E}[\varphi(X)] \geq \varphi(\mathbb{E}[X])$，其中$\varphi$是一个凸函数。</p>
-<p>将$\mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z)}{q(Z)}\right]$ 定义为<strong>ELBO</strong>，显然，ELBO和evidence之间存在一个gap，而这个gap变分分布$q(z)$和真实分布$p(z;x, \theta)$的KL散度，推导如下。</p>
+f(x_1, x_2) = \frac{1}{2\pi\sqrt{\sigma_{11}\sigma_{22}(1-\rho^2)}}\exp\left\{-\frac{1}{2(1-\rho^2)}\left[\left(\frac{x_1 - \mu_1}{\sqrt{\sigma_{11}}}\right)^2 + \left(\frac{x_2 - \mu_2}{\sqrt{\sigma_{22}}}\right)^2 + 2\rho\left(\frac{x_1 - \mu_1}{\sqrt{\sigma_{11}}}\right)\left(\frac{x_2 - \mu_2}{\sqrt{\sigma_{22}}}\right)\right]\right\}</script><span id="more"></span>
+<p>从多元正态分布密度函数的表达式可以看出，对于一个固定大小c的密度而言，所有可能的$\pmb{x}$构成一个椭圆。</p>
+<p><strong>引理1</strong></p>
+<blockquote>
+<p>Contours of constant density for the p-dimensional normal distribution are ellipsoids defined by $\pmb{x}$ such the that</p>
 <script type="math/tex; mode=display">
-\begin{align*}
-KL(q(z) \ || \ p(z|x, \theta)) &:= \mathbb{E}_{Z\sim q}\left[\log \frac{q(Z)}{p(Z; x, \theta)} \right] \\
-&= \mathbb{E}_{Z\sim q}\left[\log q(Z) \right] - \mathbb{E}_{Z\sim q}\left[\log\frac{p(x, Z; \theta)}{p(x; \theta)} \right] \\
-&= \mathbb{E}_{Z\sim q}\left[\log q(Z) \right] - \mathbb{E}_{Z\sim q}\left[\log p(x, Z; \theta) \right] + \mathbb{E}_{Z\sim q}\left[\log p(x; \theta) \right] \\
-&= \log p(x; \theta) - \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z; \theta)}{q(Z)} \right] \\
-&= evidence - ELBO
-\end{align*}</script><h4 id="Variational-Inference"><a href="#Variational-Inference" class="headerlink" title="Variational Inference"></a>Variational Inference</h4><p>在得到观测数据$x$之后，我们希望做极大似然估计求$\theta$，但由于边缘分布$p(x; \theta) = \frac{p(x,z; \theta)}{p(z;x, \theta)}$无法直接计算，所以希望使用一个变分分布$q(z)$去近似$p(z; x, \theta)$，从而能够计算$p(x; \theta)$。为了使$q(z)$较好地近似$p(z; x, \theta)$，可以通过减小它们之间的KL散度实现，也即最大化ELBO。</p>
-<h4 id="Expectation-Maximization-EM算法"><a href="#Expectation-Maximization-EM算法" class="headerlink" title="Expectation-Maximization (EM算法)"></a>Expectation-Maximization (EM算法)</h4><ul>
-<li><strong>Expectation Step: </strong>$q^* = \arg\max<em>{q} ELBO =  \arg\max</em>{q} \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z; \theta)}{q(Z)} \right]$</li>
-<li><strong>Maximization Step: </strong>$\theta<em>{new} = \arg \max</em>{\theta} ELBO = \arg\max<em>{\theta}\mathbb{E}</em>{Z\sim {q^\star}}\left[\log \frac{p(x, Z; \theta)}{q^\star(Z)} \right]$</li>
-<li>重复这个过程直到收敛</li>
+(\pmb{x-\mu})'\pmb{\Sigma}^{-1}(\pmb{x-\mu}) = c^2</script><p>These ellipsoids are centered at $\pmb{\mu}$ and have axes $\pm c\sqrt{\lambda_i}\pmb{e_i}$, where $\pmb{\Sigma}\pmb{e_i}=\lambda_i\pmb{e_i}$ for i = 1, 2, …, p</p>
+</blockquote>
+<h4 id="一些常用的性质"><a href="#一些常用的性质" class="headerlink" title="一些常用的性质"></a>一些常用的性质</h4><ul>
+<li>性质1: $\pmb{X} \sim N_p(\pmb{\mu, \Sigma})$，则任意对于$\pmb{X}$中的随机变量的线性组合$\pmb{a’X} = a_1X_1 + a_2X_2 + \cdots + a_pX_p$服从分布$N(\pmb{a’\mu}, \pmb{a’\Sigma a})$；如果对于任意的$\pmb{a}$，都有$\pmb{a’X}$服从$N(\pmb{a’\mu}, \pmb{a’\Sigma a})$，则$\pmb{X} \sim N_p(\pmb{\mu, \Sigma})$</li>
+<li>性质2: $\pmb{X} \sim N_p(\pmb{\mu, \Sigma})$，则$\pmb{AX} \sim N_q(\pmb{A\mu, A\Sigma A’})$，其中q是$\pmb{A}$的行数；$\pmb{X + d} \sim N_p(\pmb{\mu + d}, \pmb{\Sigma)}$，其中$\pmb{d}$为常数向量</li>
+<li>性质3:$\pmb{X} \sim N_p(\pmb{\mu, \Sigma})$，$\pmb{X}$的所有子集都是多元正态分布</li>
+<li>性质4: <ol>
+<li>$\pmb{X<em>1} \sim N_q(\pmb{\mu_1, \Sigma_1}), \pmb{X_2} \sim N_p(\pmb{\mu_2, \Sigma_2})$，则$Cov(\pmb{X_1, X_2}) = \pmb{0}</em>{q\times p}$</li>
+<li>$\begin{bmatrix}\pmb{X<em>1} \ \pmb{X_2}\end{bmatrix} \sim N</em>{q<em>1 + q_2}\left(\begin{bmatrix}\pmb{\mu_1} \ \pmb{\mu_2}\end{bmatrix},\begin{bmatrix}\pmb{\Sigma</em>{11}} &amp;  \pmb{\Sigma<em>{12}}\ \pmb{\Sigma</em>{21}} &amp; \pmb{\Sigma<em>{22}}\end{bmatrix}\right)$，则$\pmb{X_1}, \pmb{X_2}$互相独立当且仅当$\pmb{\Sigma</em>{12}} = \pmb{0}$</li>
+<li>$\pmb{X<em>1} \sim N_q(\pmb{\mu_1, \Sigma</em>{11}}), \pmb{X<em>2} \sim N_p(\pmb{\mu_2, \Sigma</em>{22}})$，且互相独立，则有$\begin{bmatrix}\pmb{X<em>1} \ \pmb{X_2}\end{bmatrix} \sim N</em>{q<em>1 + q_2}\left(\begin{bmatrix}\pmb{\mu_1} \ \pmb{\mu_2}\end{bmatrix},\begin{bmatrix}\pmb{\Sigma</em>{11}} &amp;  \pmb{0}\ \pmb{0} &amp; \pmb{\Sigma_{22}}\end{bmatrix}\right)$</li>
+</ol>
+</li>
+<li>性质5: $\begin{bmatrix}\pmb{X<em>1} \ \pmb{X_2}\end{bmatrix} \sim N</em>{q<em>1 + q_2}\left(\begin{bmatrix}\pmb{\mu_1} \ \pmb{\mu_2}\end{bmatrix},\begin{bmatrix}\pmb{\Sigma</em>{11}} &amp;  \pmb{\Sigma<em>{12}}\ \pmb{\Sigma</em>{21}} &amp; \pmb{\Sigma<em>{22}}\end{bmatrix}\right)，给定$$\pmb{X_2 = x_2}$，则$\pmb{X_1}$的条件分布仍然为正态分布，且有$\pmb{\mu</em>{X<em>1 | X_2}} = \pmb{\mu_1 + \Sigma</em>{12}\Sigma<em>{22}^{-1}(x_2 - \mu_2)}, \pmb{\Sigma</em>{X<em>1|X_2} = \Sigma</em>{11} - \Sigma<em>{12}\Sigma</em>{22}^{-1}\Sigma_{21}}$</li>
+<li>性质6: $\pmb{X} \sim N_p(\pmb{\mu, \Sigma})$<ol>
+<li>$(\pmb{X-\mu})’\pmb{\Sigma}^{-1}(\pmb{X-\mu}) \sim \chi_p^2)$，其中$\chi_p^2$是自由度为p的卡方分布</li>
+<li>$\pmb{X} \sim N_p(\pmb{\mu, \Sigma})$中$ \left{(\pmb{x:} \pmb{x-\mu})’\pmb{\Sigma}^{-1}(\pmb{x-\mu}) \leq \chi_q^2(\alpha)\right}$的概率为$1-\alpha$，其中$\chi_q^2(\alpha)$是卡方分布的$\alpha$上分位点</li>
+</ol>
+</li>
+<li>性质7: $\pmb{X<em>1}, \pmb{X_2}, …, \pmb{X_n}$互相独立且$\pmb{X_j}$服从分布$N_p(\pmb{\mu_j, \Sigma})$，则$\pmb{V_1} = c_1\pmb{X_1} + c_2\pmb{X_2} + \cdots + c_n\pmb{X_n} \sim N_p\left(\sum</em>{j=1}^n c<em>j\pmb{\mu_j}, \left(\sum</em>{j=1}^n c_j^2\right)\pmb{\Sigma}\right)$。令$\pmb{V_2} = b_1\pmb{X_1} + b_2\pmb{X_2} + \cdots + b_n\pmb{X_n}$，则$\pmb{V_1, V_2}$服从多元正态分布，协方差矩阵为<script type="math/tex; mode=display">
+\begin{bmatrix}
+\left(\sum_{j=1}^n c_j^2\right)\pmb{\Sigma} &\pmb{(b'c)\Sigma} \\
+\pmb{(b'c)\Sigma} & \left(\sum_{j=1}^n b_j^2\right)\pmb{\Sigma}
+\end{bmatrix}</script></li>
 </ul>
-<p>E步相当于在给定$\theta$的情况下，找到一个最优的$q(z)$，去逼近$p(z;x, \theta)$，使得通过变分得到估计尽量准确；M步相当于，在得到了一个较为准确的估计的条件下，做极大似然估计。</p>
-<p>参考文章：<a target="_blank" rel="noopener" href="https://mbernste.github.io/posts/elbo/">ELBO</a></p>
 
     </div>
 
@@ -283,12 +294,12 @@ KL(q(z) \ || \ p(z|x, \theta)) &:= \mathbb{E}_{Z\sim q}\left[\log \frac{q(Z)}{p(
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/06/20/Reinforcement-Learning/" rel="prev" title="Reinforcement Learning">
-      <i class="fa fa-chevron-left"></i> Reinforcement Learning
+    <a href="/2022/08/03/tensorflow/" rel="prev" title="tensorflow">
+      <i class="fa fa-chevron-left"></i> tensorflow
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/08/03/tensorflow/" rel="next" title="tensorflow">
-      tensorflow <i class="fa fa-chevron-right"></i>
+    <a href="/2022/08/19/Machine-Learning/" rel="next" title="Machine Learning">
+      Machine Learning <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -348,7 +359,7 @@ KL(q(z) \ || \ p(z|x, \theta)) &:= \mathbb{E}_{Z\sim q}\left[\log \frac{q(Z)}{p(
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kullback-Leibler-divergence-KL%E6%95%A3%E5%BA%A6"><span class="nav-number">1.</span> <span class="nav-text">Kullback-Leibler divergence (KL散度)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Evidence-Lower-Bound-ELBO"><span class="nav-number">2.</span> <span class="nav-text">Evidence Lower Bound (ELBO)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Variational-Inference"><span class="nav-number">2.1.</span> <span class="nav-text">Variational Inference</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Expectation-Maximization-EM%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">Expectation-Maximization (EM算法)</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E8%AE%A1%E5%AD%A6%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">统计学知识梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83"><span class="nav-number">1.1.</span> <span class="nav-text">多元正态分布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">一些常用的性质</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

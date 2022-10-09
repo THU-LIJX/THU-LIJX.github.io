@@ -20,19 +20,21 @@
     var CONFIG = {"hostname":"thu-lijx.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="假设随机变量$X$和$Z$服从联合分布$p(x, z; \theta)$，其中$\theta$是分布的参数。我们可以得到$X$的观测值，但不能得到$Z$的观测值，即$X$为观测变量，$Z$为隐变量。给定$\theta$，并且有观测值$x$，我们希望得到$Z$的后验分布$p(z; x, \theta)$。通常这个后验分布无法直接计算，但可以通过一个变分分布$q(z)$近似。’">
+  <meta name="description" content="GAMES101学习笔记Lecture 1: Introduction课程内容：  Rasterization 光栅化 Curves and Meshes 曲线和曲面 Ray Tracing 光线追踪 Animation &#x2F; Simulation 动画 &#x2F; 模拟  Rasterization 将几何单元投影到屏幕 将投影结果打散成像素  Curves and Meshes在计算机图形学中，如何表示">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Variational Inference">
-<meta property="og:url" content="https://thu-lijx.github.io/2022/07/10/Variational-Inference/index.html">
+<meta property="og:title" content="GAMES101">
+<meta property="og:url" content="https://thu-lijx.github.io/2022/09/19/GAMES101/index.html">
 <meta property="og:site_name" content="Shin&#39;s notebook">
-<meta property="og:description" content="假设随机变量$X$和$Z$服从联合分布$p(x, z; \theta)$，其中$\theta$是分布的参数。我们可以得到$X$的观测值，但不能得到$Z$的观测值，即$X$为观测变量，$Z$为隐变量。给定$\theta$，并且有观测值$x$，我们希望得到$Z$的后验分布$p(z; x, \theta)$。通常这个后验分布无法直接计算，但可以通过一个变分分布$q(z)$近似。’">
+<meta property="og:description" content="GAMES101学习笔记Lecture 1: Introduction课程内容：  Rasterization 光栅化 Curves and Meshes 曲线和曲面 Ray Tracing 光线追踪 Animation &#x2F; Simulation 动画 &#x2F; 模拟  Rasterization 将几何单元投影到屏幕 将投影结果打散成像素  Curves and Meshes在计算机图形学中，如何表示">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-07-10T03:22:22.000Z">
-<meta property="article:modified_time" content="2022-07-10T03:22:22.000Z">
+<meta property="og:image" content="https://thu-lijx.github.io/Users/lijx/Library/Application%20Support/typora-user-images/image-20220919212647209.png">
+<meta property="article:published_time" content="2022-09-19T11:35:19.000Z">
+<meta property="article:modified_time" content="2022-09-19T11:35:19.000Z">
 <meta property="article:author" content="Shin">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://thu-lijx.github.io/Users/lijx/Library/Application%20Support/typora-user-images/image-20220919212647209.png">
 
-<link rel="canonical" href="https://thu-lijx.github.io/2022/07/10/Variational-Inference/">
+<link rel="canonical" href="https://thu-lijx.github.io/2022/09/19/GAMES101/">
 
 
 <script id="page-configurations">
@@ -45,7 +47,7 @@
   };
 </script>
 
-  <title>Variational Inference | Shin's notebook</title>
+  <title>GAMES101 | Shin's notebook</title>
   
 
 
@@ -188,7 +190,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/07/10/Variational-Inference/">
+    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/09/19/GAMES101/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -201,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Variational Inference
+          GAMES101
         </h1>
 
         <div class="post-meta">
@@ -211,7 +213,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2022-07-10 11:22:22" itemprop="dateCreated datePublished" datetime="2022-07-10T11:22:22+08:00">2022-07-10</time>
+              <time title="Created: 2022-09-19 19:35:19" itemprop="dateCreated datePublished" datetime="2022-09-19T19:35:19+08:00">2022-09-19</time>
             </span>
 
           <br>
@@ -220,14 +222,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.1k</span>
+              <span>2.8k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>2 mins.</span>
+              <span>3 mins.</span>
             </span>
 
         </div>
@@ -239,36 +241,184 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>假设随机变量$X$和$Z$服从联合分布$p(x, z; \theta)$，其中$\theta$是分布的参数。我们可以得到$X$的观测值，但不能得到$Z$的观测值，即$X$为观测变量，$Z$为隐变量。给定$\theta$，并且有观测值$x$，我们希望得到$Z$的后验分布$p(z; x, \theta)$。通常这个后验分布无法直接计算，但可以通过一个变分分布$q(z)$近似。’<br><span id="more"></span></p>
-<h3 id="Kullback-Leibler-divergence-KL散度"><a href="#Kullback-Leibler-divergence-KL散度" class="headerlink" title="Kullback-Leibler divergence (KL散度)"></a>Kullback-Leibler divergence (KL散度)</h3><p>对于离散分布$P$和$Q$，KL散度定义为</p>
-<script type="math/tex; mode=display">
-D_{KL}\left(P \ ||\ Q\right) = \sum_{x \in \mathcal{X}} P(x)\log\left(\frac{P(x)}{Q(x)}\right)</script><p>对于连续分布$P$和$Q$，KL散度定义为</p>
-<script type="math/tex; mode=display">
-D_{KL}\left(P \ ||\ Q\right) = \int_{-\infty}^{+\infty} P(x)\log\left(\frac{P(x)}{Q(x)}\right) dx</script><h3 id="Evidence-Lower-Bound-ELBO"><a href="#Evidence-Lower-Bound-ELBO" class="headerlink" title="Evidence Lower Bound (ELBO)"></a>Evidence Lower Bound (ELBO)</h3><p>evidence定义为$\log p(x; \theta)$。假设随机变量$Z$服从分布$q$，则可以推出evidence的一个下界。</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-\log p(x; \theta) &= \log \int p(x, z; \theta) dz \\
-&= \log \int q(z) \frac{p(x, z; \theta)}{q(z)} dz \\
-&= \log \mathbb{E}_{Z\sim q}\left[\frac{p(x, Z)}{q(Z)}\right] \\
-&\geq \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z)}{q(Z)} \right] \tag{Jensen's Inequality} \\
-\end{align*}</script><p><strong>Jenson’ s Inequality: </strong>$\mathbb{E}[\varphi(X)] \geq \varphi(\mathbb{E}[X])$，其中$\varphi$是一个凸函数。</p>
-<p>将$\mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z)}{q(Z)}\right]$ 定义为<strong>ELBO</strong>，显然，ELBO和evidence之间存在一个gap，而这个gap变分分布$q(z)$和真实分布$p(z;x, \theta)$的KL散度，推导如下。</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-KL(q(z) \ || \ p(z|x, \theta)) &:= \mathbb{E}_{Z\sim q}\left[\log \frac{q(Z)}{p(Z; x, \theta)} \right] \\
-&= \mathbb{E}_{Z\sim q}\left[\log q(Z) \right] - \mathbb{E}_{Z\sim q}\left[\log\frac{p(x, Z; \theta)}{p(x; \theta)} \right] \\
-&= \mathbb{E}_{Z\sim q}\left[\log q(Z) \right] - \mathbb{E}_{Z\sim q}\left[\log p(x, Z; \theta) \right] + \mathbb{E}_{Z\sim q}\left[\log p(x; \theta) \right] \\
-&= \log p(x; \theta) - \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z; \theta)}{q(Z)} \right] \\
-&= evidence - ELBO
-\end{align*}</script><h4 id="Variational-Inference"><a href="#Variational-Inference" class="headerlink" title="Variational Inference"></a>Variational Inference</h4><p>在得到观测数据$x$之后，我们希望做极大似然估计求$\theta$，但由于边缘分布$p(x; \theta) = \frac{p(x,z; \theta)}{p(z;x, \theta)}$无法直接计算，所以希望使用一个变分分布$q(z)$去近似$p(z; x, \theta)$，从而能够计算$p(x; \theta)$。为了使$q(z)$较好地近似$p(z; x, \theta)$，可以通过减小它们之间的KL散度实现，也即最大化ELBO。</p>
-<h4 id="Expectation-Maximization-EM算法"><a href="#Expectation-Maximization-EM算法" class="headerlink" title="Expectation-Maximization (EM算法)"></a>Expectation-Maximization (EM算法)</h4><ul>
-<li><strong>Expectation Step: </strong>$q^* = \arg\max<em>{q} ELBO =  \arg\max</em>{q} \mathbb{E}_{Z\sim q}\left[\log \frac{p(x, Z; \theta)}{q(Z)} \right]$</li>
-<li><strong>Maximization Step: </strong>$\theta<em>{new} = \arg \max</em>{\theta} ELBO = \arg\max<em>{\theta}\mathbb{E}</em>{Z\sim {q^\star}}\left[\log \frac{p(x, Z; \theta)}{q^\star(Z)} \right]$</li>
-<li>重复这个过程直到收敛</li>
+        <h2 id="GAMES101学习笔记"><a href="#GAMES101学习笔记" class="headerlink" title="GAMES101学习笔记"></a>GAMES101学习笔记</h2><h3 id="Lecture-1-Introduction"><a href="#Lecture-1-Introduction" class="headerlink" title="Lecture 1: Introduction"></a>Lecture 1: Introduction</h3><p>课程内容：</p>
+<ul>
+<li>Rasterization 光栅化</li>
+<li>Curves and Meshes 曲线和曲面</li>
+<li>Ray Tracing 光线追踪</li>
+<li>Animation / Simulation 动画 / 模拟</li>
 </ul>
-<p>E步相当于在给定$\theta$的情况下，找到一个最优的$q(z)$，去逼近$p(z;x, \theta)$，使得通过变分得到估计尽量准确；M步相当于，在得到了一个较为准确的估计的条件下，做极大似然估计。</p>
-<p>参考文章：<a target="_blank" rel="noopener" href="https://mbernste.github.io/posts/elbo/">ELBO</a></p>
-
+<h4 id="Rasterization"><a href="#Rasterization" class="headerlink" title="Rasterization"></a>Rasterization</h4><ul>
+<li>将几何单元投影到屏幕</li>
+<li>将投影结果打散成像素</li>
+</ul>
+<h4 id="Curves-and-Meshes"><a href="#Curves-and-Meshes" class="headerlink" title="Curves and Meshes"></a>Curves and Meshes</h4><p>在计算机图形学中，如何表示几何图形</p>
+<h4 id="Ray-Tracing"><a href="#Ray-Tracing" class="headerlink" title="Ray Tracing"></a>Ray Tracing</h4><ul>
+<li>Shoot rays from the camera through each pixel<ul>
+<li>Calculate intersection and shading</li>
+<li>Continue to bounce the rays till they hit light sources</li>
+</ul>
+</li>
+<li>Gold standard in Animations / Movies</li>
+</ul>
+<h4 id="Animation-Simulation"><a href="#Animation-Simulation" class="headerlink" title="Animation / Simulation"></a>Animation / Simulation</h4><h3 id="Lecture-2-Review-of-Linear-Algebra"><a href="#Lecture-2-Review-of-Linear-Algebra" class="headerlink" title="Lecture 2: Review of Linear Algebra"></a>Lecture 2: Review of Linear Algebra</h3><p><strong>向量、向量内积</strong></p>
+<p><strong>向量叉积: $ a\times b = -b \times a$且$||a \times b|| = ||a||||b||\sin\psi$，其中$\psi$为a与b的夹角，且$a\times b$垂直于a、b构成的平面，方向遵循右手定则</strong></p>
+<script type="math/tex; mode=display">
+a \times b = 
+\begin{pmatrix}
+y_az_b - y_bz_a \\
+z_ax_b - x_az_b \\
+x_ay_b - y_ax_b
+\end{pmatrix}
+= A^*b = 
+\begin{pmatrix}
+0 & -z_a & y_a \\
+z_a & 0 & -x_a \\
+-y_a & x_a & 0
+\end{pmatrix}
+\begin{pmatrix}
+x_b \\
+y_b \\
+z_b
+\end{pmatrix}</script><p>叉积作用：判断两个向量左/右关系，判断点在三角形的内部/外部。</p>
+<p>按一个方向遍历三角形的顶点并取叉积，只有三个叉积结果同时为正或同时为负时，该点在三角形内部</p>
+<h3 id="Lecture-3-Transformation"><a href="#Lecture-3-Transformation" class="headerlink" title="Lecture 3: Transformation"></a>Lecture 3: Transformation</h3><ul>
+<li>为什么要学习变换？在图形学当中视角的转换、绘制当中都需要变换</li>
+<li><strong>2D transformations</strong><ul>
+<li>使用矩阵表示变换</li>
+<li>Rotation, scale, shear 旋转、缩放、切变</li>
+</ul>
+</li>
+<li><strong>Homogeneous coordinates</strong> 齐次坐标</li>
+</ul>
+<p><strong>Scale Matrix</strong></p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+s_x & 0 \\
+0 & s_y
+\end{pmatrix}</script><p><strong>Reflection Matrix</strong></p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+-1 & 0 \\
+0 & 1
+\end{pmatrix}</script><p><strong>Shear Matrix</strong></p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+1 & a \\
+0 & 1 \\
+\end{pmatrix}</script><p><img src="/Users/lijx/Library/Application Support/typora-user-images/image-20220919212647209.png" alt="image-20220919212647209" style="zoom:30%;" /></p>
+<p><strong>Rotation Matrix</strong></p>
+<p>逆时针旋转$\theta$</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+\cos\theta & -\sin\theta \\
+\sin\theta & \cos\theta
+\end{pmatrix}</script><h4 id="Homogeneous-Coordinates"><a href="#Homogeneous-Coordinates" class="headerlink" title="Homogeneous Coordinates"></a>Homogeneous Coordinates</h4><p>为什么要引入齐次坐标？平移变换无法用二维坐标的线性变化来表示，在齐次坐标下，这些变换都可以用线性变换表示</p>
+<ul>
+<li>2D point = $(x, y, 1)^T$</li>
+<li>2D vector = $(x, y, 0)^T$</li>
+</ul>
+<p><strong>齐次坐标下的平移变换矩阵</strong></p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+1 & 0 & t_x \\
+0 & 1 & t_y \\
+0 & 0 & 1
+\end{pmatrix}</script><p><strong>Affine Transformations 仿射变换 = linear map + translation</strong></p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+x'\\
+y'
+\end{pmatrix} = 
+\begin{pmatrix}
+a & b \\
+c & d 
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix} + 
+\begin{pmatrix}
+t_x\\
+t_y
+\end{pmatrix}</script><script type="math/tex; mode=display">
+\begin{pmatrix}
+x'\\
+y'\\
+1
+\end{pmatrix} =
+\begin{pmatrix}
+a & b & t_x \\
+c & d & t_y \\
+0 & 0 & 1 
+\end{pmatrix}
+\begin{pmatrix}
+x\\
+y\\
+1
+\end{pmatrix}</script><p>线性变换的逆变换的变换矩阵是矩阵的逆。</p>
+<h3 id="Lecture-4-Transformation-Cont"><a href="#Lecture-4-Transformation-Cont" class="headerlink" title="Lecture 4: Transformation Cont."></a>Lecture 4: Transformation Cont.</h3><ul>
+<li>3D transformations</li>
+<li>Viewing (观测) transformation<ul>
+<li>View (视图) / Camera transformation</li>
+<li>Projection (投影) transformation<ul>
+<li>Orthographic (正交) projection</li>
+<li>Perspective (透视) projection</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Rotation around x-, y-, or z-axis</strong></p>
+<script type="math/tex; mode=display">
+R_x(\alpha) = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & \cos\alpha & -\sin\alpha & 0 \\
+0 & \sin\alpha & \cos\alpha & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}</script><script type="math/tex; mode=display">
+R_y(\alpha) = \begin{pmatrix}
+\cos\alpha & 0 & \sin\alpha & 0 \\
+0 & 1 & 0 & 0 \\
+-\sin\alpha & 0 & \cos\alpha & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}</script><script type="math/tex; mode=display">
+R_z(\alpha) = \begin{pmatrix}
+\cos\alpha & -\sin\alpha & 0 & 0 \\
+\sin\alpha & \cos\alpha & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}</script><h4 id="Rodrigues’-Rotation-Formula"><a href="#Rodrigues’-Rotation-Formula" class="headerlink" title="Rodrigues’ Rotation Formula"></a>Rodrigues’ Rotation Formula</h4><p><strong>Rotation by angle $\alpha$ around axis n</strong></p>
+<script type="math/tex; mode=display">
+\pmb{R}(\pmb{n}, \alpha) = \cos(\alpha)\pmb{I} + (1 - \cos\alpha)\pmb{nn^T} + \sin\alpha
+\begin{pmatrix}
+0 & -n_z & n_y \\
+n_z & 0 & -n_x \\
+-n_y & n_x & 0
+\end{pmatrix}</script><h4 id="Projection-Transformation"><a href="#Projection-Transformation" class="headerlink" title="Projection Transformation"></a>Projection Transformation</h4><p><strong>Orthographic Projection</strong></p>
+<script type="math/tex; mode=display">
+M_{ortho} = 
+\begin{pmatrix}
+\frac{2}{r-l} & 0 & 0 & 0 \\
+0 & \frac{2}{t-b} & 0 & 0 \\
+0 & 0 & \frac{2}{n-f} & 0 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}
+\begin{pmatrix}
+1 & 0 & 0 & -\frac{r+l}{2} \\
+0 & 1 & 0 & -\frac{t+b}{2} \\
+0 & 0 & 1 & -\frac{n+f}{2} \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}</script><p><strong>Perspective Projection</strong></p>
+<script type="math/tex; mode=display">
+M_{persp \rightarrow ortho} =
+\begin{pmatrix}
+n & 0 & 0 & 0\\
+0 & n & 0 & 0\\
+0 & 0 & n+f & -nf \\
+0 & 0 & 1 & 0
+\end{pmatrix}</script><script type="math/tex; mode=display">
+M_{persp} = M_{ortho}M_{persp\rightarrow ortho}</script>
     </div>
 
     
@@ -283,12 +433,12 @@ KL(q(z) \ || \ p(z|x, \theta)) &:= \mathbb{E}_{Z\sim q}\left[\log \frac{q(Z)}{p(
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/06/20/Reinforcement-Learning/" rel="prev" title="Reinforcement Learning">
-      <i class="fa fa-chevron-left"></i> Reinforcement Learning
+    <a href="/2022/08/19/Machine-Learning/" rel="prev" title="Machine Learning">
+      <i class="fa fa-chevron-left"></i> Machine Learning
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/08/03/tensorflow/" rel="next" title="tensorflow">
-      tensorflow <i class="fa fa-chevron-right"></i>
+    <a href="/2022/10/02/Course-Computer-Graphics/" rel="next" title="Course Computer Graphics">
+      Course Computer Graphics <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -348,7 +498,7 @@ KL(q(z) \ || \ p(z|x, \theta)) &:= \mathbb{E}_{Z\sim q}\left[\log \frac{q(Z)}{p(
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kullback-Leibler-divergence-KL%E6%95%A3%E5%BA%A6"><span class="nav-number">1.</span> <span class="nav-text">Kullback-Leibler divergence (KL散度)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Evidence-Lower-Bound-ELBO"><span class="nav-number">2.</span> <span class="nav-text">Evidence Lower Bound (ELBO)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Variational-Inference"><span class="nav-number">2.1.</span> <span class="nav-text">Variational Inference</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Expectation-Maximization-EM%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">Expectation-Maximization (EM算法)</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GAMES101%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">GAMES101学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lecture-1-Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Lecture 1: Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Rasterization"><span class="nav-number">1.1.1.</span> <span class="nav-text">Rasterization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Curves-and-Meshes"><span class="nav-number">1.1.2.</span> <span class="nav-text">Curves and Meshes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ray-Tracing"><span class="nav-number">1.1.3.</span> <span class="nav-text">Ray Tracing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Animation-Simulation"><span class="nav-number">1.1.4.</span> <span class="nav-text">Animation &#x2F; Simulation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lecture-2-Review-of-Linear-Algebra"><span class="nav-number">1.2.</span> <span class="nav-text">Lecture 2: Review of Linear Algebra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lecture-3-Transformation"><span class="nav-number">1.3.</span> <span class="nav-text">Lecture 3: Transformation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Homogeneous-Coordinates"><span class="nav-number">1.3.1.</span> <span class="nav-text">Homogeneous Coordinates</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lecture-4-Transformation-Cont"><span class="nav-number">1.4.</span> <span class="nav-text">Lecture 4: Transformation Cont.</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Rodrigues%E2%80%99-Rotation-Formula"><span class="nav-number">1.4.1.</span> <span class="nav-text">Rodrigues’ Rotation Formula</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Projection-Transformation"><span class="nav-number">1.4.2.</span> <span class="nav-text">Projection Transformation</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

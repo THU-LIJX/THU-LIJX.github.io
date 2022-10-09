@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -179,6 +179,858 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/10/02/Course-Computer-Graphics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shin's notebook">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/02/Course-Computer-Graphics/" class="post-title-link" itemprop="url">Course Computer Graphics</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-10-02 13:34:07" itemprop="dateCreated datePublished" datetime="2022-10-02T13:34:07+08:00">2022-10-02</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>4 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="计算机图形学课程笔记"><a href="#计算机图形学课程笔记" class="headerlink" title="计算机图形学课程笔记"></a>计算机图形学课程笔记</h2><h3 id="Lecture-3-图形的扫描转换与区域填充"><a href="#Lecture-3-图形的扫描转换与区域填充" class="headerlink" title="Lecture 3 图形的扫描转换与区域填充"></a>Lecture 3 图形的扫描转换与区域填充</h3><p><strong>光栅图形学</strong></p>
+<ul>
+<li>基本图形的扫描转换 (scan conversion) ，如直线、圆弧、椭圆弧</li>
+<li>多边形的扫描转换与区域填充 (area filling)</li>
+<li>裁剪 (clipping)</li>
+<li>反走样 (antialiasing)</li>
+<li>投影 (projection)</li>
+<li>消隐 (visible-surface detection / hidden-surface elimintaion)</li>
+</ul>
+<h4 id="直线的扫描转换"><a href="#直线的扫描转换" class="headerlink" title="直线的扫描转换"></a>直线的扫描转换</h4><p>常用算法：</p>
+<ul>
+<li>数值微分法 (DDA)</li>
+<li>中点画线法</li>
+<li><strong>Bresenham算法</strong></li>
+</ul>
+<p><strong>数值微分法</strong></p>
+<ul>
+<li>基本思想<ul>
+<li>知道了两个端点$P_0(x_0, y_0), P_1(x_1, y_1)$，则可以求出直线段的斜率$k$。当$0 &lt; k &lt; 1$时，根据公式$y = kx + b$来计算相应$y$坐标，取像素点$(x, \text{round}(y))$作为当前点的坐标；当$k \geq 1$时，根据$y$求取$x$的坐标</li>
+</ul>
+</li>
+<li>增量算法<ul>
+<li>在一个迭代算法中，每一步的$x, y$值使用上一步的值加上一个增量来获得</li>
+<li>$y<em>{i+1} = y_i + k \Delta x$，当$\Delta x = 1$时，$y</em>{i+1} = y_i + k$</li>
+</ul>
+</li>
+<li>优缺点：方法直观但效率低</li>
+</ul>
+<p><strong>中点画线法</strong></p>
+<ul>
+<li>基本思想<ul>
+<li>设当前像素点为$(x_p, y_p)$，下一个像素点为右侧$P_1$或右上角$P_2$两个点中的一个，设$M = (x_p + 1, y_p + 0.5)$为$P_1, P_2$的中点，$Q$为理想直线与$x = x_p + 1$的交点。将Q与M的y坐标值进行比较<ul>
+<li>当$M$在$Q$点下方时，则右上角的$P_2$为下一个像素点</li>
+<li>当$M$在$Q$点上方时，则右侧的$P_1$为下一个像素点</li>
+</ul>
+</li>
+<li>构造判别式，也即将$M$的坐标带入直线方程，$d = F(M) = a(x_p + 1) + b(y_p + 0.5) + c$<ul>
+<li>$a = y_0 - y_1, b = x_1 - x_0, c = x_0y_1 - x_1y_0$</li>
+<li>$d &gt; 0$，则$M$在Q点上方，取$P_1$</li>
+<li>$d &lt; 0$，则M在Q点下方，取$P_2$</li>
+<li>$d = 0$，M、Q重合，此时取$P_1$或$P_2$都行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>增量算法<ul>
+<li>若当前像素处于$d \geq 0$的情况，则取$P_1$，要判断下一个像素位置，应计算，$d_1 = F(x_p+2, y_p +0.5) = a(x_p+2) + b(y_p+0.5) + c = d + a$</li>
+<li>若当前像素处于$d &lt; 0$的情况，则取$P_2$，要判断下一个像素位置，应计算，$d_2 = F(x_p+2, y_p + 1.5) = a(x_p + 2) + b(y_p + 1.5) + c = d + a + b$</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bresenham算法</strong></p>
+<ul>
+<li>基本思想<ul>
+<li>设直线方程为$y<em>{i+1} = y_i + k(x</em>{i+1} - x_i) = y_i + k$，因为直线的起始点在像素中心，所以误差项$d$的初始值为0</li>
+<li>当$d \geq 0.5$时，取$P_2$</li>
+<li>当$d &lt; 0.5$时，取$P_1$</li>
+<li>$x$的下标每增加1，$d$的值就相应递增直线的斜率$k$，当$d \geq 0.5$时，将$d$减去1</li>
+</ul>
+</li>
+</ul>
+<h4 id="圆弧的扫描转换"><a href="#圆弧的扫描转换" class="headerlink" title="圆弧的扫描转换"></a>圆弧的扫描转换</h4><p>算法：</p>
+<ul>
+<li>中点画圆法</li>
+<li>正负法</li>
+<li>多边形逼近法</li>
+</ul>
+<p><strong>中点画圆法</strong></p>
+<ul>
+<li>基本思想<ul>
+<li>由于圆的对称性以及坐标轴的对称性，只需要画出八分之一圆弧即可得到整个圆弧</li>
+<li>考虑中心在原点，半径为$R$的圆在第一象限内$x\in [0, R/\sqrt{2}]$的八分之一圆弧</li>
+<li>构造判别式$F(x, y) = x^2 + y^2 - R^2$</li>
+<li>已知$P(x_p, y_p), P_1(x_p+1,y_p), P_2(x_p+1, y_p-1), M(x_p+1, y_p-0.5)$</li>
+<li>$d = F(M) = F(x_p+1, y_p-0.5) = (x_p+1)^2 + (y_p-0.5)^2 - R^2$<ul>
+<li>若$d &lt; 0$，则取$P_1$为下一像素，而且再下一像素的判别式为$d’ = F(x_p+2, y_p-0.5) = d+2x_p+3$</li>
+<li>若$d \geq 0$，则取$P_2$为下一像素，而且再下一像素的判别式为$d’ = F(x_p+2, y_p-1.5) = d+2x_p-2y_p+5$</li>
+<li>第一个像素是$(0, R)$，判别式$d$的初始值是$d_0=F(1, R-0.5) = 1.25-R$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>正负法</strong></p>
+<ul>
+<li>基本思想<ul>
+<li>由圆方程的隐函数$F(x, y) = x^2 + y^2 - R^2$，判断点与曲线的关系</li>
+<li>已知$P<em>i(x_i, y_i)$，求$P</em>{i+1}$的原则<ul>
+<li>当$F(x<em>i, y_i) \leq 0$，则$P</em>{i+1} = (x<em>i+1, y_i), F(x</em>{i+1}, y_{i+1}) = F(x_i, y_i) +2x_i +1$</li>
+<li>当$F(x<em>i, y_i) \leq 0$，则$P</em>{i+1} = (x<em>i, y_i+1), F(x</em>{i+1}, y_{i+1}) = F(x_i, y_i) +2y_i +1$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="椭圆的扫描转换"><a href="#椭圆的扫描转换" class="headerlink" title="椭圆的扫描转换"></a>椭圆的扫描转换</h4><p><strong>中点画法</strong></p>
+<ul>
+<li>基本思想<ul>
+<li>由椭圆的对称性，可以只考虑第一象限椭圆弧生成</li>
+<li>将椭圆弧分为上下两部分，以椭圆弧上切线斜率为-1处作为分界点</li>
+<li>判别式$F(x, y) = b^2x^2 + a^2y^2 - a^2b^2$</li>
+</ul>
+</li>
+</ul>
+<h4 id="多边形的扫描转换"><a href="#多边形的扫描转换" class="headerlink" title="多边形的扫描转换"></a>多边形的扫描转换</h4><ul>
+<li>多边形有两种重要的表示方式：<strong>顶点表示</strong>和<strong>点阵表示</strong></li>
+<li>多边形的扫描转换：把多边形的顶点表示转换为点阵表示</li>
+</ul>
+<p>算法：</p>
+<ul>
+<li>逐点判断法<ul>
+<li>点在多边形内的判别方法<ul>
+<li>射线法</li>
+<li>累计角度法</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>扫描线算法</li>
+<li>边缘填充法</li>
+<li><strong>边界标志法</strong></li>
+</ul>
+<p><strong>逐点判断法</strong></p>
+<ul>
+<li>射线法<ul>
+<li>从点<em>V</em>发出射线，与多边形相交，若交点个数为偶数，则<em>V</em>点在多边形外边，反之在多边形内</li>
+<li>若交点为多边形顶点，则需要判断该顶点对应的两条边是否在上下同侧</li>
+</ul>
+</li>
+<li>累计角度法<ul>
+<li>从$V$点向多边形$P$的各顶点发出射线，形成有向角，计算有向角之和<ul>
+<li>和为0，则在外部</li>
+<li>和为$\pm 2\pi$，则在内部</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>扫描线算法</strong></p>
+<ul>
+<li>基本思想<ul>
+<li>按扫描线顺序，计算扫描线与多边形的相交区间，再用要求的颜色显示这些区间的像素，完成填充</li>
+<li>一条扫描线填充过程的步骤<ul>
+<li>求交</li>
+<li>排序</li>
+<li>配对</li>
+<li>着色</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>细节<ul>
+<li>扫描线与多边形的顶点相交时，必须正确进行交点的取舍</li>
+<li>检查共享该顶点的两条边的另外两个端点的$y$值。交点个数为这两个点$y$值大于交点$y$值的个数</li>
+<li>问题：求交、排序导致算法效率低</li>
+<li>数据结构<ul>
+<li><strong>活性边表 (AET, Active Edge Table)</strong><ul>
+<li>把与当前扫描线相交的边称为活性边，将它们按照与扫描线交点$x$坐标升序排列</li>
+<li>链表节点内容<ul>
+<li>$x:$ 当前扫描线与边的交点的$x$坐标</li>
+<li>$\Delta x$：从当前扫描线到下一条扫描线间的$x$增量，如果扫描线时从低到高，<strong>则$\Delta x$就是斜率的倒数</strong></li>
+<li>$y_{max}$：该边所交的最高扫描线</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>新边表 <strong>(NET, New Egde Table)</strong><ul>
+<li>存放在该扫描线第一次出现的边<ul>
+<li>若某边的较低端点为$y<em>{min}$，则该边就放在扫描线$y</em>{min}$的新边表中</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>算法大致过程：初始化新边表，对于每条扫描线，从新边表对应的位置中取出边，插入排序到活性边表中，然后将活性边表内的节点两两配对，得到着色区间，最后将活性边表的$x$值递增、同时去掉不需要的边</li>
+</ul>
+<p><strong>边缘填充法</strong></p>
+<ul>
+<li>基本思想<ul>
+<li>对于扫描线和各多边形的交点，将该扫描线上交点右方的所有像素颜色求补</li>
+<li>两种实现方式<ul>
+<li>以扫描线为中心的边缘填充</li>
+<li>以边为中心的边缘填充</li>
+</ul>
+</li>
+<li>引入栅栏提高效率</li>
+</ul>
+</li>
+</ul>
+<p><strong>边界标志法</strong></p>
+<ul>
+<li>基本思想<ul>
+<li>对多边形的每条边进行直线扫描转换，也即对多边形边界所经过的像素打上标志</li>
+<li>采用和扫描线算法类似的方法进行着色</li>
+<li>使用一个布尔量inside来指示当前点是否在多边形内的状态</li>
+</ul>
+</li>
+<li>需要注意两条边的交点计数次数</li>
+</ul>
+<h3 id="Lecture-4-裁剪"><a href="#Lecture-4-裁剪" class="headerlink" title="Lecture 4 裁剪"></a>Lecture 4 裁剪</h3><p>裁剪：确定图形中哪些部分落在显示区之内，哪些落在显示区之外，以便只显示落在显示区内的那部分图形</p>
+<ul>
+<li>裁剪窗口、裁剪对象</li>
+<li>裁剪的时机（点阵图形 OR <strong>参数图形</strong>）</li>
+</ul>
+<h4 id="直线段裁剪"><a href="#直线段裁剪" class="headerlink" title="直线段裁剪"></a>直线段裁剪</h4><p>算法：</p>
+<ul>
+<li>直接求交法</li>
+<li>Cohen-Sutherland裁剪</li>
+<li>中点分割裁剪算法</li>
+<li>Nicholl-Lee-Nicholl算法</li>
+<li>梁有栋—Barssky算法</li>
+<li>Lyrus-Beck算法</li>
+</ul>
+<p><strong>直接求交法</strong></p>
+<ul>
+<li>基本思想<ul>
+<li>线段的两个端点都在窗口内，线段必定位于窗口内，即可见</li>
+<li>线段的两个端点同时位于窗口左侧、右侧、上侧或下侧，线段必定位于窗口外，不可见</li>
+<li>线段与窗口各边求交，得到可见部分</li>
+</ul>
+</li>
+<li>算法过程<ul>
+<li>过$P_1(x_1, y_1), P_2(x_2, y_2)$的直线$y = k(x - x_1) + y_1, k = (y_2 - y_1)/(x_2 - x_1)$</li>
+<li>直线与窗口各边所在直线交点<ul>
+<li>左：$x=x_L, y=k(x_L - x_1) + y_1, k\neq\infty$</li>
+<li>右：$x=x_R, y=k(x_R - x_1) + y_1, k\neq\infty$</li>
+<li>上：$y=y_T, x = (y_T - y) / k + x_1, k\neq 0$</li>
+<li>下：$y=y_B, x = (y_B - y) / k + x_1, k\neq 0$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Cohen-Sutherland裁剪</strong></p>
+<p><strong>中点分割裁剪算法</strong></p>
+<p><strong>Nicholl-Lee-Nicholl算法</strong></p>
+<p><strong>Lyrus-Beck算法</strong></p>
+<h4 id="多边形裁剪"><a href="#多边形裁剪" class="headerlink" title="多边形裁剪"></a>多边形裁剪</h4><p>算法</p>
+<ul>
+<li>Sutherland-Hodgeman算法</li>
+<li><strong>Weiler-Athenton算法</strong></li>
+</ul>
+<p><strong>Weiler-Athenton算法</strong></p>
+<ul>
+<li>裁剪窗口，被裁剪多边形可以是任意多边形：凸、凹、带内环。裁剪窗口和被裁多边形地位对等</li>
+<li>被裁剪多边形为<strong>主多边形</strong>，裁剪窗口为<strong>裁剪多边形</strong>。同时约定顶点序列方向：外环为逆时针，内环为顺时针，这样便于之后判断入点出点</li>
+<li>基本思想<ul>
+<li>裁剪结果区域由主多边形的部分边界和裁剪多边形的部分边界共同组成</li>
+<li>在交点处，边界发生交替</li>
+<li>交点成对出现</li>
+<li>入点：裁剪多边形外部$\rightarrow$裁剪多边形内部</li>
+<li>出点：裁剪多边形内部$\rightarrow$裁剪多边形外部</li>
+<li><img src="/Users/lijx/Library/Application Support/typora-user-images/image-20221006212118852.png" alt="image-20221006212118852" style="zoom:50%;" /></li>
+</ul>
+</li>
+<li>算法流程<ul>
+<li>建立主多边形和裁剪多边形的顶点表</li>
+<li>求交点、归类，并按顺序插入到顶点表中，在两个表的相应顶点间建立双向指针，便于之后查找<ul>
+<li>判断出点、入点的方式：对两条相交的线段的向量求叉积（按照顶点遍历顺序得到向量），根据叉积结果的正负值来判断出点、入点，<strong>坐标系为左手系和右手系的结果恰好相反。</strong></li>
+</ul>
+</li>
+<li>裁剪过程<ul>
+<li>如果还有未跟踪过的交点，创建一个新的多边形，同时任取一个作为起点，加入多边形的顶点表。否则算法结束</li>
+<li>如果该交点为入点，则在主多边形的顶点表中跟踪，取下一个节点。如果为出点，则在裁剪多边形的顶点表中跟踪。如果为多边形顶点，则保持当前跟踪的顶点表</li>
+<li>找到一个环后，得到一个多边形</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Lecture-5-图形变换与投影"><a href="#Lecture-5-图形变换与投影" class="headerlink" title="Lecture 5 图形变换与投影"></a>Lecture 5 图形变换与投影</h3><ul>
+<li>齐次坐标与二维图形的几何变换</li>
+<li>二维图形的显示流程</li>
+<li>三维图形的几何变换</li>
+<li>投影变换</li>
+<li>三维图形的显示流程</li>
+</ul>
+<h3 id="Lecture-6-消隐"><a href="#Lecture-6-消隐" class="headerlink" title="Lecture 6 消隐"></a>Lecture 6 消隐</h3><h3 id="Lecture-7-消隐2"><a href="#Lecture-7-消隐2" class="headerlink" title="Lecture 7 消隐2"></a>Lecture 7 消隐2</h3><h3 id="Lecture-8"><a href="#Lecture-8" class="headerlink" title="Lecture 8"></a>Lecture 8</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/09/19/GAMES101/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shin's notebook">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/19/GAMES101/" class="post-title-link" itemprop="url">GAMES101</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-09-19 19:35:19" itemprop="dateCreated datePublished" datetime="2022-09-19T19:35:19+08:00">2022-09-19</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>3 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="GAMES101学习笔记"><a href="#GAMES101学习笔记" class="headerlink" title="GAMES101学习笔记"></a>GAMES101学习笔记</h2><h3 id="Lecture-1-Introduction"><a href="#Lecture-1-Introduction" class="headerlink" title="Lecture 1: Introduction"></a>Lecture 1: Introduction</h3><p>课程内容：</p>
+<ul>
+<li>Rasterization 光栅化</li>
+<li>Curves and Meshes 曲线和曲面</li>
+<li>Ray Tracing 光线追踪</li>
+<li>Animation / Simulation 动画 / 模拟</li>
+</ul>
+<h4 id="Rasterization"><a href="#Rasterization" class="headerlink" title="Rasterization"></a>Rasterization</h4><ul>
+<li>将几何单元投影到屏幕</li>
+<li>将投影结果打散成像素</li>
+</ul>
+<h4 id="Curves-and-Meshes"><a href="#Curves-and-Meshes" class="headerlink" title="Curves and Meshes"></a>Curves and Meshes</h4><p>在计算机图形学中，如何表示几何图形</p>
+<h4 id="Ray-Tracing"><a href="#Ray-Tracing" class="headerlink" title="Ray Tracing"></a>Ray Tracing</h4><ul>
+<li>Shoot rays from the camera through each pixel<ul>
+<li>Calculate intersection and shading</li>
+<li>Continue to bounce the rays till they hit light sources</li>
+</ul>
+</li>
+<li>Gold standard in Animations / Movies</li>
+</ul>
+<h4 id="Animation-Simulation"><a href="#Animation-Simulation" class="headerlink" title="Animation / Simulation"></a>Animation / Simulation</h4><h3 id="Lecture-2-Review-of-Linear-Algebra"><a href="#Lecture-2-Review-of-Linear-Algebra" class="headerlink" title="Lecture 2: Review of Linear Algebra"></a>Lecture 2: Review of Linear Algebra</h3><p><strong>向量、向量内积</strong></p>
+<p><strong>向量叉积: $ a\times b = -b \times a$且$||a \times b|| = ||a||||b||\sin\psi$，其中$\psi$为a与b的夹角，且$a\times b$垂直于a、b构成的平面，方向遵循右手定则</strong></p>
+<script type="math/tex; mode=display">
+a \times b = 
+\begin{pmatrix}
+y_az_b - y_bz_a \\
+z_ax_b - x_az_b \\
+x_ay_b - y_ax_b
+\end{pmatrix}
+= A^*b = 
+\begin{pmatrix}
+0 & -z_a & y_a \\
+z_a & 0 & -x_a \\
+-y_a & x_a & 0
+\end{pmatrix}
+\begin{pmatrix}
+x_b \\
+y_b \\
+z_b
+\end{pmatrix}</script><p>叉积作用：判断两个向量左/右关系，判断点在三角形的内部/外部。</p>
+<p>按一个方向遍历三角形的顶点并取叉积，只有三个叉积结果同时为正或同时为负时，该点在三角形内部</p>
+<h3 id="Lecture-3-Transformation"><a href="#Lecture-3-Transformation" class="headerlink" title="Lecture 3: Transformation"></a>Lecture 3: Transformation</h3><ul>
+<li>为什么要学习变换？在图形学当中视角的转换、绘制当中都需要变换</li>
+<li><strong>2D transformations</strong><ul>
+<li>使用矩阵表示变换</li>
+<li>Rotation, scale, shear 旋转、缩放、切变</li>
+</ul>
+</li>
+<li><strong>Homogeneous coordinates</strong> 齐次坐标</li>
+</ul>
+<p><strong>Scale Matrix</strong></p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+s_x & 0 \\
+0 & s_y
+\end{pmatrix}</script><p><strong>Reflection Matrix</strong></p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+-1 & 0 \\
+0 & 1
+\end{pmatrix}</script><p><strong>Shear Matrix</strong></p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+1 & a \\
+0 & 1 \\
+\end{pmatrix}</script><p><img src="/Users/lijx/Library/Application Support/typora-user-images/image-20220919212647209.png" alt="image-20220919212647209" style="zoom:30%;" /></p>
+<p><strong>Rotation Matrix</strong></p>
+<p>逆时针旋转$\theta$</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+\cos\theta & -\sin\theta \\
+\sin\theta & \cos\theta
+\end{pmatrix}</script><h4 id="Homogeneous-Coordinates"><a href="#Homogeneous-Coordinates" class="headerlink" title="Homogeneous Coordinates"></a>Homogeneous Coordinates</h4><p>为什么要引入齐次坐标？平移变换无法用二维坐标的线性变化来表示，在齐次坐标下，这些变换都可以用线性变换表示</p>
+<ul>
+<li>2D point = $(x, y, 1)^T$</li>
+<li>2D vector = $(x, y, 0)^T$</li>
+</ul>
+<p><strong>齐次坐标下的平移变换矩阵</strong></p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+1 & 0 & t_x \\
+0 & 1 & t_y \\
+0 & 0 & 1
+\end{pmatrix}</script><p><strong>Affine Transformations 仿射变换 = linear map + translation</strong></p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+x'\\
+y'
+\end{pmatrix} = 
+\begin{pmatrix}
+a & b \\
+c & d 
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix} + 
+\begin{pmatrix}
+t_x\\
+t_y
+\end{pmatrix}</script><script type="math/tex; mode=display">
+\begin{pmatrix}
+x'\\
+y'\\
+1
+\end{pmatrix} =
+\begin{pmatrix}
+a & b & t_x \\
+c & d & t_y \\
+0 & 0 & 1 
+\end{pmatrix}
+\begin{pmatrix}
+x\\
+y\\
+1
+\end{pmatrix}</script><p>线性变换的逆变换的变换矩阵是矩阵的逆。</p>
+<h3 id="Lecture-4-Transformation-Cont"><a href="#Lecture-4-Transformation-Cont" class="headerlink" title="Lecture 4: Transformation Cont."></a>Lecture 4: Transformation Cont.</h3><ul>
+<li>3D transformations</li>
+<li>Viewing (观测) transformation<ul>
+<li>View (视图) / Camera transformation</li>
+<li>Projection (投影) transformation<ul>
+<li>Orthographic (正交) projection</li>
+<li>Perspective (透视) projection</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Rotation around x-, y-, or z-axis</strong></p>
+<script type="math/tex; mode=display">
+R_x(\alpha) = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & \cos\alpha & -\sin\alpha & 0 \\
+0 & \sin\alpha & \cos\alpha & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}</script><script type="math/tex; mode=display">
+R_y(\alpha) = \begin{pmatrix}
+\cos\alpha & 0 & \sin\alpha & 0 \\
+0 & 1 & 0 & 0 \\
+-\sin\alpha & 0 & \cos\alpha & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}</script><script type="math/tex; mode=display">
+R_z(\alpha) = \begin{pmatrix}
+\cos\alpha & -\sin\alpha & 0 & 0 \\
+\sin\alpha & \cos\alpha & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}</script><h4 id="Rodrigues’-Rotation-Formula"><a href="#Rodrigues’-Rotation-Formula" class="headerlink" title="Rodrigues’ Rotation Formula"></a>Rodrigues’ Rotation Formula</h4><p><strong>Rotation by angle $\alpha$ around axis n</strong></p>
+<script type="math/tex; mode=display">
+\pmb{R}(\pmb{n}, \alpha) = \cos(\alpha)\pmb{I} + (1 - \cos\alpha)\pmb{nn^T} + \sin\alpha
+\begin{pmatrix}
+0 & -n_z & n_y \\
+n_z & 0 & -n_x \\
+-n_y & n_x & 0
+\end{pmatrix}</script><h4 id="Projection-Transformation"><a href="#Projection-Transformation" class="headerlink" title="Projection Transformation"></a>Projection Transformation</h4><p><strong>Orthographic Projection</strong></p>
+<script type="math/tex; mode=display">
+M_{ortho} = 
+\begin{pmatrix}
+\frac{2}{r-l} & 0 & 0 & 0 \\
+0 & \frac{2}{t-b} & 0 & 0 \\
+0 & 0 & \frac{2}{n-f} & 0 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}
+\begin{pmatrix}
+1 & 0 & 0 & -\frac{r+l}{2} \\
+0 & 1 & 0 & -\frac{t+b}{2} \\
+0 & 0 & 1 & -\frac{n+f}{2} \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}</script><p><strong>Perspective Projection</strong></p>
+<script type="math/tex; mode=display">
+M_{persp \rightarrow ortho} =
+\begin{pmatrix}
+n & 0 & 0 & 0\\
+0 & n & 0 & 0\\
+0 & 0 & n+f & -nf \\
+0 & 0 & 1 & 0
+\end{pmatrix}</script><script type="math/tex; mode=display">
+M_{persp} = M_{ortho}M_{persp\rightarrow ortho}</script>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/08/19/Machine-Learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shin's notebook">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/19/Machine-Learning/" class="post-title-link" itemprop="url">Machine Learning</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-08-19 20:56:15" itemprop="dateCreated datePublished" datetime="2022-08-19T20:56:15+08:00">2022-08-19</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="一些经典机器学习算法"><a href="#一些经典机器学习算法" class="headerlink" title="一些经典机器学习算法"></a>一些经典机器学习算法</h2><h3 id="k-means"><a href="#k-means" class="headerlink" title="k-means"></a>k-means</h3><p>问题定义：给定一个观测数据集$\pmb{(x_1, x_2, …, x_n)}$，k-means的目标是将这n个数据点分为k个类，即$S = {S_1, S_2, …,S_k}$，使得within-cluster sum of squares（WCSS）最小</p>
+<script type="math/tex; mode=display">
+\arg\min_{S} \sum_{i=1}^k\sum_{x\in S_i}|| \pmb{x - \mu_i}||^2</script><p>直接求解比较困难，通常使用启发式算法进行求解，算法流程如下</p>
+<ol>
+<li>随机初始化$\pmb{\mu_1, \mu_2, …, \mu_k}$</li>
+<li>对每个数据点$\pmb{x}$，将其类标签设为$\arg \min_{k} ||\pmb{x - \mu_k}||^2$</li>
+<li>重新计算类中心点，即$\pmb{\mu<em>k} = \frac{\sum</em>{x \in S_k} x}{|S_k|}$</li>
+<li>重复2、3，直到收敛</li>
+</ol>
+<p>很容易就能证明，第2、3步都会使得目标函数减小，因此重复迭代能不断减小目标函数的值，使得聚类效果更好。</p>
+<p>缺点：得到的聚类集合通常是凸集合，对一些狭长的分布不友好；初始化的值会对最终的聚类结果有很大影响<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/19/Machine-Learning/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/08/19/statistic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shin's notebook">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/19/statistic/" class="post-title-link" itemprop="url">statistic</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-08-19 16:57:27" itemprop="dateCreated datePublished" datetime="2022-08-19T16:57:27+08:00">2022-08-19</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>3 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="统计学知识梳理"><a href="#统计学知识梳理" class="headerlink" title="统计学知识梳理"></a>统计学知识梳理</h2><h3 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h3><p>对于一元正态分布而言，有如下密度函数</p>
+<script type="math/tex; mode=display">
+\begin{align}
+f(x) &= \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\left[(x-\mu)/\sigma\right]^2 / 2} \\
+&= (2\pi)^{-1/2}(\sigma^2)^{-1/2}e^{-(x-\mu)'(\sigma^2)^{-1}(x-\mu) / 2}
+\end{align}</script><p>其中的$(x-\mu)’(\sigma^2)^{-1}(x-\mu)$刻画了点$x$到均值$\mu$经过方差加权的距离，同理可以得到多元正态分布的密度函数（令维度为p）</p>
+<script type="math/tex; mode=display">
+f(\pmb{x}) = (2\pi)^{-p/2}|\pmb{\Sigma}|^{-1/2}e^{-(\pmb{x-\mu})'\pmb{\Sigma}^{-1}(\pmb{x-\mu})/2}</script><p>其中$\pmb{\mu}$为均值向量，$\pmb{\Sigma}$为协方差矩阵（对称正定）</p>
+<p>e.g. 二元正态分布的密度函数</p>
+<script type="math/tex; mode=display">
+f(x_1, x_2) = \frac{1}{2\pi\sqrt{\sigma_{11}\sigma_{22}(1-\rho^2)}}\exp\left\{-\frac{1}{2(1-\rho^2)}\left[\left(\frac{x_1 - \mu_1}{\sqrt{\sigma_{11}}}\right)^2 + \left(\frac{x_2 - \mu_2}{\sqrt{\sigma_{22}}}\right)^2 + 2\rho\left(\frac{x_1 - \mu_1}{\sqrt{\sigma_{11}}}\right)\left(\frac{x_2 - \mu_2}{\sqrt{\sigma_{22}}}\right)\right]\right\}</script>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/19/statistic/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://thu-lijx.github.io/2022/08/03/tensorflow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shin's notebook">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/03/tensorflow/" class="post-title-link" itemprop="url">tensorflow</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-08-03 19:58:19" itemprop="dateCreated datePublished" datetime="2022-08-03T19:58:19+08:00">2022-08-03</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>410</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="TensorFlow指北"><a href="#TensorFlow指北" class="headerlink" title="TensorFlow指北"></a>TensorFlow指北</h2><h3 id="数据加载"><a href="#数据加载" class="headerlink" title="数据加载"></a>数据加载</h3><p>使用tensorflow_datasets加载数据的话需要挂vpn</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HTTPS_PROXY=http://127.0.0.1:7890</span><br></pre></td></tr></table></figure>
+<p>下载好的数据集会放在<code>~/tensorflow_datasets/downloads</code>下面，通常会有一个<code>tar.gz</code>和一个<code>INFO</code>文件，解压之后的文件会放在<code>extracted</code>里面，里面会有一个将<code>tar.gz</code>解压后的文件夹，会有一个<code>TAR_GZ.</code>的前缀。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tar.gz文件</span></span><br><span class="line">cs.toronto.edu_kriz_cifar-10-binaryxKOMUKG8XzocVTfyFVq51o-fJese2Nnd2j2ymlm8od0.tar.gz</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压后的文件</span></span><br><span class="line">TAR_GZ.cs.toronto.edu_kriz_cifar-10-binaryxKOMUKG8XzocVTfyFVq51o-fJese2Nnd2j2ymlm8od0.tar.gz</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -419,7 +1271,7 @@ G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2R_{t+3} + \cdots = \sum_{k=0}^\infty \g
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -464,12 +1316,12 @@ G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2R_{t+3} + \cdots = \sum_{k=0}^\infty \g
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">9k</span>
+    <span title="Symbols count total">21k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">8 mins.</span>
+    <span title="Reading time total">20 mins.</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
